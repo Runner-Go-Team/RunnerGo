@@ -19,45 +19,61 @@ RunnerGo是一款国内开发者自研的性能压测工具，可以进行接口
 
 ## 快速开始
 
+
 ```
 #下载代码
 git clone https://github.com/Runner-Go-Team/runner-go.git
 # 启动
-cd kunpeng/
-docker-compose -f docker-compose.yaml up -d
-# 关闭
-docker-compose -f docker-compose.yaml down
+cd kunpeng # 进入到github 目录
+docker-compose  up -d   # 启动
+docker-compose  down -v # 删除
 ```
+
+
 
 ## 目录说明
 ```
-.                                                                 
-├── config       #                                              
-│   └── config.env      #env_file:                                 
-├── docker-compose.yaml                                            
-├── kafka                                                          
-├── kp-manage                                                      
-│   ├── Dockerfile                                                 
-│   ├── entrypoint.sh                                              
-│   ├── kp-manage                                                  
-│   └── kp-manage.tar.gz                                           
-├── kp-runner                                                      
-│   ├── dev.yaml                                                   
-│   ├── Dockerfile                                                 
-│   ├── entrypoint.sh                                              
-│   └── kp-runner                                                  
-├── mongo                                                          
-│   └── data                                                       
-├── mysql                                                          
-│   ├── data                                                       
-│   ├── Dockerfile                                                 
-│   └── mysql.sql                                                  
-├── nginx                                                          
-│   ├── data                                                       
-│   └── kp-web-ui.conf                                    
-└── redis                                                          
-    └── data  
+├── collector
+│   ├── build.sh
+│   ├── Dockerfile
+│   ├── entrypoint.sh
+│   └── wait-for-it.sh
+├── config
+│   ├── config.env
+├── docker-compose.yaml
+├── file-server
+│   ├── data
+│   ├── Dockerfile
+│   ├── file-server
+│   └── file-server.tar.gz
+├── kafka
+├── manage
+│   ├── Dockerfile
+│   ├── entrypoint.sh
+│   ├── manage
+│   └── wait-for-it.sh
+├── mongo
+│   ├── data
+│   └── init-mongo.sh
+├── mysql
+│   ├── data
+│   ├── Dockerfile
+│   ├── mysql.cnf
+│   └── mysql.sql
+├── nginx
+│   ├── data
+│   ├── Dockerfile
+│   ├── entrypoint.sh
+│   └── runner.conf
+├── redis
+│   └── data
+└── runner
+    ├── build.sh
+    ├── Dockerfile
+    ├── entrypoint.sh
+    └── wait-for-it.sh
 ```
+
 
 ## 技术栈
 - 后端: GoLang
