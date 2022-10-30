@@ -1,4 +1,3 @@
-# runner-go
 ![logo](https://apipost.oss-cn-beijing.aliyuncs.com/kunpeng/images/logo.png)  基于go语言的一体化性能压测工具
 
 RunnerGo是一款国内开发者自研的性能压测工具，可以进行接口测试、场景自动化测试、性能压测等一系列功能。
