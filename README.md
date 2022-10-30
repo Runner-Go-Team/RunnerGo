@@ -1,4 +1,6 @@
 # runner-go
+![logo](https://apipost.oss-cn-beijing.aliyuncs.com/kunpeng/images/logo.png)  基于go语言的一体化性能压测工具
+
 RunnerGo是一款国内开发者自研的性能压测工具，可以进行接口测试、场景自动化测试、性能压测等一系列功能。
 
 ## 工具特性：
@@ -8,6 +10,13 @@ RunnerGo是一款国内开发者自研的性能压测工具，可以进行接口
 - Flow场景流：可视化的业务流，通过连线就可快速搭建起来自己的业务流，还可直接调试运行场景，电流般的业务流转
 - 多种压测模式：支持并发模式、阶梯模式、错误率模式、响应时间模式、每秒请求时间模式等多种压测模式，满足所有业务需
 
+![interface](https://apipost.oss-cn-beijing.aliyuncs.com/kunpeng/images/interface1.png)
+
+### 生成报告
+![report](https://apipost.oss-cn-beijing.aliyuncs.com/kunpeng/images/report.png)
+
+### 在线体验地址
+[http://www.runnergo.com/](http://www.runnergo.com/)
 
 ## 快速开始
 
@@ -55,4 +64,11 @@ docker-compose -f runner-go-single.yaml down
 - 基础设施: Docker
 - 测试引擎: GoLang
 
+## 技术架构
+![struct](https://apipost.oss-cn-beijing.aliyuncs.com/kunpeng/images/struct.png)
+
+## 业务流转图
+![flow](https://apipost.oss-cn-beijing.aliyuncs.com/kunpeng/images/flow.png)
+
 ## 联系我们
+![qrcode](https://apipost.oss-cn-beijing.aliyuncs.com/kunpeng/images/qrcode.jpeg)
