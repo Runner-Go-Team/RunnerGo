@@ -36,7 +36,7 @@ services:
     networks:
       - apipost_net
   manage:
-    image: runnergo/manage:v1.0
+    image: runnergo/manage:v2.0
     restart: always
     env_file:
       - ./config/config.env
