@@ -21,9 +21,10 @@ RunnerGo是一款国内开发者自研的性能压测工具，可以进行接口
 
 ```
 # 启动
-docker-compose -f runner-go-single.yaml
+cd kunpeng/
+docker-compose -f docker-compose.yaml
 # 关闭
-docker-compose -f runner-go-single.yaml down
+docker-compose -f docker-compose.yaml down
 ```
 
 ## 目录说明

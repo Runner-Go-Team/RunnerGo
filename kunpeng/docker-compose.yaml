@@ -1,0 +1,122 @@
+version: "3"
+services:
+  mysql-db:
+    image: mysql:5.7.40
+    env_file:
+      - ./config/config.env
+    #ports:
+    #  - "33006:3306"
+    volumes:
+      - ./mysql/mysql.sql:/docker-entrypoint-initdb.d/mysql.sql:ro
+      - ./mysql/data:/var/lib/mysql
+      - ./mysql/mysql.cnf:/etc/mysql/conf.d/mysql.cnf
+    restart: always
+    networks:
+      - apipost_net
+  redis-db:
+    image: redis:6.2.7
+    volumes:
+      - ./redis/data:/data
+    # ports:
+    #  - "63790:6379"
+    command:  redis-server --requirepass mypassword
+    restart: always
+    networks:
+      - apipost_net
+  mongo-db:
+    image: mongo:4.4
+    env_file:
+      - ./config/config.env
+    #ports:
+    #  - "37017:27017"
+    volumes:
+      - ./mongo/data:/data/db
+      - ./mongo/init-mongo.sh:/docker-entrypoint-initdb.d/init-mongo.sh
+    restart: always
+    networks:
+      - apipost_net
+  manage:
+    image: runnergo/manage:v1.0
+    restart: always
+    env_file:
+      - ./config/config.env
+    networks:
+      - apipost_net
+    ports:
+      - "58889:8080"
+    depends_on:
+      - mysql-db
+    command: ["/bin/wait-for-it.sh","mysql-db:3306","--", "/data/manage/manage", "-c","/data/manage/dev.yaml"]
+  kp-web-ui:
+    image: runnergo/web-ui:v1.0
+    #image: nginx:1.23.2-alpine
+    restart: always
+    #volumes:
+    #  - ./nginx/data:/data
+    #  - ./nginx/runner.conf:/etc/nginx/conf.d/runner.conf
+    #environment:
+     #RUNNER_UI_PORT: 81
+     # NGX_DOC_ROOT: /data
+    ports:
+      - "80:81"
+    networks:
+      - apipost_net
+  runner:
+    image: runnergo/runner:v1.0
+    restart: always
+    env_file:
+      - ./config/config.env
+    networks:
+      - apipost_net
+    #ports:
+    #  - "8002:8002"
+    depends_on:
+      - kafka 
+    command: ["/bin/wait-for-it.sh","kafka:9092","--", "/data/runner/runner", "-c","/data/runner/dev.yaml"]
+  collector:
+    image: runnergo/collector:v1.0
+    restart: always
+    env_file:
+      - ./config/config.env
+    networks:
+      - apipost_net
+    depends_on:
+      - kafka
+    command: ["/bin/wait-for-it.sh","kafka:9092","--", "/data/collector/collector", "-c","/data/collector/dev.yaml"]
+  file-server:
+    image: runnergo/file-server:v1.0
+    restart: always
+    env_file:
+      - ./config/config.env
+    ports:
+      - "58888:80"
+    volumes:
+      - ./file-server/data:/app/file-server/file
+    networks:
+      - apipost_net
+  zookeeper:
+      image: runnergo/zookeeper:latest 
+      restart: always
+      #ports:
+      #    - 2181:2181
+      networks:
+        - apipost_net
+  kafka:
+      image: runnergo/kafka:2.13-3.2.1 
+      restart: always
+      depends_on:
+          - zookeeper
+      # ports:
+      #    - 9092:9092
+      environment:
+          KAFKA_ADVERTISED_HOST_NAME: kafka
+          KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181/kafka
+          KAFKA_LISTENERS: PLAINTEXT://:9092
+          #KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://192.168.209.128:9092
+          KAFKA_BROKER_ID: 1
+          KAFKA_CREATE_TOPICS: "reprot:20:1"
+      networks:
+        - apipost_net
+networks:
+  apipost_net:
+    driver: bridge

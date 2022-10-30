@@ -1,0 +1,101 @@
+/*ApiPost 颜色变量 - 样式设置文件*/
+:root {
+
+    /* New apipost css reset start */
+
+    --theme-color: #EC663C;
+
+    --base-color-brand: #ff6c37;
+    --base-color-info: #097bed;
+    --base-color-error:#eb2013;
+    --base-color-success:#0cbb52;
+    --base-color-warning: #ffb400;
+
+    --background-color-primary: #212121;
+    --background-color-secondary: #262626;
+    --background-color-tertiary: #2b2b2b;
+    --background-modal-backdrop: rgba(0, 0, 0, 0.7);
+
+    --content-color-primary: #ffffff;
+    /* --content-color-secondary: #a6a6a6; */
+    --content-color-secondary: #c4c4c4;
+    /* --content-color-secondary: #666666; */
+    --content-color-constant: #ffffff;
+    --content-color-tertiary:#6B6B6B;
+
+    --border-color-default: #303030;
+    --border-color-strong: #3b3b3b;
+
+    --highlight-background-color-brand: #e05320;
+    --highlight-background-color-info: #0265d2;
+    --highlight-background-color-primary: #303030;
+    --highlight-background-color-secondary: #303030;
+    --highlight-background-color-tertiary: #3b3b3b;
+
+    --scrollbar-thumb-background-color: #3B3B3B;
+    --scrollbar-track-background-color: #2B2B2B;
+
+    --shadow-default: 0px 2px 8px 0px rgba(0, 0, 0, 0.65);
+
+    --text-select-color: rgb(91 127 165);
+
+    /* 浅色模式/按钮 */
+    --text-lightmode-color: #3A86FF;
+
+    --text-weight-regular: 400;
+    --text-weight-medium: 600;
+    --text-weight-bold: 600;
+    
+    /* New apipost css reset end */
+
+      /* 删除红 */
+      --delete-red: #FF4C4C;
+      /* 运行绿 */
+      --run-green: #3CC071;
+      /* 一致白 */
+      --common-white: #FFFFFF;
+      /* 主题橙 */
+      --theme-color: #EC663C;
+      /* 操作日志 */
+      /* 标签蓝 */
+      --log-blue: #3A86FF;
+      /* 标签绿 */
+      --log-green: #3CC071;
+      /* 标签橘 */
+      --log-orange: #EC663C;
+      /* 标签青 */
+      --log-cyan: #35CAAF;
+      /* 首页数据 */
+      /* 数字1 */
+      --index-1: #4D91FF;
+      /* 数字2 */
+      --index-2: #35CAAF;
+      /* 数字3 */
+      --index-3: #FF7043;
+      /* 数字4 */
+      --index-4: #00ACD7;
+      /* 头像hover */
+      --avatar: rgba(32, 33, 34, 0.2);
+      /* 运行绿 */
+      --run-green: #3CC071;
+      /* 错误红 */
+      --run-red: #C03C3C;
+
+  
+      /* 暗黑模式 */
+      --bg-1: #1A1A1D;
+      --bg-2: #1F2023;
+      --bg-3: #27272B;
+      --bg-4: #39393D;
+      --bg-5: #303033;
+      /* 字体 */
+      --font-color: #C4C4C4;
+      /* icon */
+      --icon-color: #C4C4C4;
+      --font-1: #FFFFFF;
+      --font-2: #666666;
+      --font-3: #999999;
+      --select: rgba(255, 255, 255, 0.08);
+
+      --shadow: 0px 10px 10px rgba(0, 0, 0, 0.25);
+}

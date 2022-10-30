@@ -1,0 +1,7 @@
+.DS_Store
+kunpeng/file-server/data
+kunpeng/mongo/data
+kunpeng/mysql/data/kunpeng
+kunpeng/mysql/data/mysql
+kunpeng/mysql/data
+kunpeng/redis/data

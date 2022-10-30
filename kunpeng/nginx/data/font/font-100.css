@@ -1,0 +1,17 @@
+/*ApiPost 样式大小文件*/
+
+:root {
+    --border-radius-default: 4px;
+
+
+    --size-12px: 12px;
+    --size-14px: 14px;
+    --size-16px: 16px;
+    --size-18px: 18px;
+    --size-20px: 20px;
+    --size-24px: 24px;
+    --size-28px: 28px;
+    --size-30px: 30px;
+    --size-40px: 40px;
+    --size-42px: 42px;
+}
