@@ -91,4 +91,4 @@ docker-compose  down -v # 删除
 ![flow](https://apipost.oss-cn-beijing.aliyuncs.com/kunpeng/images/flow.png)
 
 ## 联系我们
-![qrcode](https://apipost.oss-cn-beijing.aliyuncs.com/kunpeng/images/qrcode.jpeg)
+![qrcode](https://apipost.oss-cn-beijing.aliyuncs.com/kunpeng/runnergo-qrcode.jpg)
