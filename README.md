@@ -14,7 +14,7 @@ RunnerGo是一款国内开发者自研的性能压测工具，可以进行接口
 ![interface](https://apipost.oss-cn-beijing.aliyuncs.com/kunpeng/images/interface1.png)
 
 ### 生成报告
-![report](https://apipost.oss-cn-beijing.aliyuncs.com/kunpeng/images/report.png)
+![report](https://apipost.oss-cn-beijing.aliyuncs.com/kunpeng/images/report.jpg)
 
 ### 官网地址
 [http://www.runnergo.cn/](http://www.runnergo.cn/)
