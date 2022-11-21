@@ -25,9 +25,8 @@ RunnerGo是一款国内开发者自研的性能压测工具，可以进行接口
 
 ## 快速开始
 
-
-```
 #以root用户执行如下命令一键安装RunnerGo
+```
 curl -sSL https://github.com/Runner-Go-Team/runner-go/quick_start.sh | bash
 ```
 
