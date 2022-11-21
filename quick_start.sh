@@ -1,7 +1,7 @@
 #! /bin/sh
 #Install Latest Stable Runner-Go Release
 
-RGVERSION='v0.1'  #RunnerGo版本
+RGVERSION='v0.2'  #RunnerGo版本
 RG_BASE='/data' #RunnerGo安装目录
 os=`uname -a`
 
@@ -77,7 +77,7 @@ __local_ip=$(hostname -I|cut -d" " -f 1)
 
 log "拷贝安装文件到目标目录"
 mkdir -p ${RG_BASE}/runnergo
-cp -Rf ./kunpeng ${RG_BASE}/runnergo/kunpeng
+cp -Rf ./runnergo ${RG_BASE}/runnergo/runnergo
 
 log "======================= 开始安装 ======================="
 #Install docker & docker-compose
@@ -150,7 +150,7 @@ else
 fi
 
 log "启动服务"
-cd ${RG_BASE}/runnergo/kunpeng
+cd ${RG_BASE}/runnergo/runnergo
 docker-compose  down  | tee -a ${__current_dir}/install.log
 docker-compose  up -d | tee -a ${__current_dir}/install.log
 

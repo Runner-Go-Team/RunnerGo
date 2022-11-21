@@ -5,3 +5,10 @@ kunpeng/mysql/data/kunpeng
 kunpeng/mysql/data/mysql
 kunpeng/mysql/data
 kunpeng/redis/data
+runnergo/file-server/data
+runnergo/mongo/data
+runnergo/mysql/data/kunpeng
+runnergo/mysql/data/mysql
+runnergo/mysql/data
+runnergo/redis/data
+
