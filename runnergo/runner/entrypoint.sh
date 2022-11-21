@@ -23,6 +23,11 @@ redis:
   password: "${REDIS_PASSWD:-123123}"
   db: 0
 
+reportRedis:
+  address: "redis-db:6379"
+  password: "${REDIS_PASSWD:-123123}"
+  db: 0
+
 kafka:
   address: "kafka:9092"
   topIc: "report"

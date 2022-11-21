@@ -1,4 +1,4 @@
-FROM ubuntu:20.04
+FROM runnergo/debian:stable-slim 
 
 ADD  runner  /data/runner/runner
 

@@ -1,5 +1,4 @@
 #!/bin/sh
-
 cat > /data/manage/dev.yaml <<EOF
 base:
   is_debug: true
@@ -43,6 +42,11 @@ proof:
   err_log: "/dev/stderr"
 
 redis:
+  address: "redis-db:6379"
+  password: "${REDIS_PASSWD:-123123}"
+  db: 0
+
+redisReport:
   address: "redis-db:6379"
   password: "${REDIS_PASSWD:-123123}"
   db: 0

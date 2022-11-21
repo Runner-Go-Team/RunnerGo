@@ -9,7 +9,7 @@ services:
     volumes:
       - ./mysql/mysql.sql:/docker-entrypoint-initdb.d/mysql.sql:ro
       - ./mysql/data:/var/lib/mysql
-      - ./mysql/mysql.cnf:/etc/mysql/conf.d/mysql.cnf
+      - ./mysql/mysql.cnf:/etc/mysql/conf.d/mysql.cnf:ro
     restart: always
     networks:
       - apipost_net
@@ -36,7 +36,7 @@ services:
     networks:
       - apipost_net
   manage:
-    image: runnergo/manage:v2.0
+    image: runnergo/manage:v2.2
     restart: always
     env_file:
       - ./config/config.env
@@ -48,7 +48,7 @@ services:
       - mysql-db
     command: ["/bin/wait-for-it.sh","mysql-db:3306","--", "/data/manage/manage", "-c","/data/manage/dev.yaml"]
   kp-web-ui:
-    image: runnergo/web-ui:v1.0
+    image: runnergo/web-ui:v2.0
     #image: nginx:1.23.2-alpine
     restart: always
     #volumes:
@@ -62,7 +62,7 @@ services:
     networks:
       - apipost_net
   runner:
-    image: runnergo/runner:v1.0
+    image: runnergo/runner:v2.0
     restart: always
     env_file:
       - ./config/config.env
@@ -74,7 +74,7 @@ services:
       - kafka 
     command: ["/bin/wait-for-it.sh","kafka:9092","--", "/data/runner/runner", "-c","/data/runner/dev.yaml"]
   collector:
-    image: runnergo/collector:v1.0
+    image: runnergo/collector:v2.0
     restart: always
     env_file:
       - ./config/config.env
@@ -84,7 +84,7 @@ services:
       - kafka
     command: ["/bin/wait-for-it.sh","kafka:9092","--", "/data/collector/collector", "-c","/data/collector/dev.yaml"]
   file-server:
-    image: runnergo/file-server:v1.0
+    image: runnergo/file-server:v2.0
     restart: always
     env_file:
       - ./config/config.env

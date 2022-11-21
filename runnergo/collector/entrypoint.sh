@@ -22,6 +22,10 @@ kafka:
   topic: "report"
   key: "kafka:report:partition"
 
+reportRedis:
+  address: "redis-db:6379"
+  password: "${REDIS_PASSWD:-123123}"
+  db: 0
 
 redis:
   address: "redis-db:6379"
@@ -29,7 +33,7 @@ redis:
   db: 0
 
 log:
-  path: "/data/logs/kp-runner/kp-collector-info.log"
+  path: "/data/logs/collector-info.log"
 
 management:
   address: "http://manage:8080/management/api/v1/plan/notify_stop_stress"
