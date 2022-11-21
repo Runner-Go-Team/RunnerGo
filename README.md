@@ -27,12 +27,8 @@ RunnerGo是一款国内开发者自研的性能压测工具，可以进行接口
 
 
 ```
-#下载代码
-git clone https://github.com/Runner-Go-Team/runner-go.git
-# 启动
-cd kunpeng # 进入到github 目录
-docker-compose  up -d   # 启动
-docker-compose  down -v # 删除
+#以root用户执行如下命令一键安装RunnerGo
+curl -sSL https://github.com/Runner-Go-Team/runner-go/quick_start.sh | bash
 ```
 
 
