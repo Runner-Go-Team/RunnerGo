@@ -15,10 +15,10 @@ RunnerGo是一款国内开发者自研的性能压测工具，可以进行接口
 - Flow场景流：可视化的业务流，通过连线就可快速搭建起来自己的业务流，还可直接调试运行场景，电流般的业务流转
 - 多种压测模式：支持并发模式、阶梯模式、错误率模式、响应时间模式、每秒请求时间模式等多种压测模式，满足所有业务需求
 
-![interface](https://apipost.oss-cn-beijing.aliyuncs.com/kunpeng/images/interface1.png)
+![interface](https://img.cdn.apipost.cn/runnergo/images/index.jpeg)
 
 ### 生成报告
-![report](https://apipost.oss-cn-beijing.aliyuncs.com/kunpeng/images/report.jpg)
+![report](https://img.cdn.apipost.cn/runnergo/images/report.jpeg)
 
 ### 官网地址
 [http://www.runnergo.cn/](http://www.runnergo.cn/)
