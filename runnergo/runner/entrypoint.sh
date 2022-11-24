@@ -5,7 +5,8 @@ heartbeat:
   port: 8002
   region: "北京"
   duration: 3
-
+  resources: 5
+  grpcHost: "kpcontroller.apipost.cn:443"
 
 
 http:
@@ -44,12 +45,11 @@ mongo:
   address: "mongo-db:27017"
 
 
-
 machine:
-  max_goroutines: 100000
-  server_type: 0
-  net_name: ""
-  disk_name: ""
+  maxGoroutines: 20005
+  serverType: 1
+  netName: ""
+  diskName: ""
 
 log:
   path: "/data/log.log"

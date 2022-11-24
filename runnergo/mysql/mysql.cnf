@@ -1,4 +1,5 @@
 [mysqld]
+default-time_zone = '+8:00'
 skip_name_resolve = 1                          # 只能用IP地址检查客户端的登录，不用主机名
 character-set-server = utf8mb4                  # 数据库默认字符集,主流字符集支持一些特殊表情符号（特殊表情符占用4个字节）
 transaction_isolation = READ-COMMITTED          # 事务隔离级别，默认为可重复读，MySQL默认可重复读级别
