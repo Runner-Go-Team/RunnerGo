@@ -16,13 +16,17 @@ RunnerGo致力于打造成一款全栈式测试平台，采用了较为宽松的
 - 多种压测模式：支持并发模式、阶梯模式、错误率模式、响应时间模式、每秒应答数模式等多种压测模式，满足所有业务需求
 - 自持接口自动化，采用用例集概念，生成丰富的自动化报告
 
-![interface](https://img.cdn.apipost.cn/runnergo/images/index.jpeg)
+### 首页展示
+![interface](https://apipost.oss-cn-beijing.aliyuncs.com/kunpeng/images/home.jpg)
 
-### 生成报告
-![report](https://img.cdn.apipost.cn/runnergo/images/report.jpeg)
+### 性能测试报告报告
+![report](https://apipost.oss-cn-beijing.aliyuncs.com/kunpeng/images/stress_report.jpg)
+
+### 自动化测试报告
+![report](https://apipost.oss-cn-beijing.aliyuncs.com/kunpeng/images/auto_report.jpg)
 
 ### 官网地址
-[http://www.runnergo.cn/](http://www.runnergo.com/)
+[http://www.runnergo.com/](http://www.runnergo.com/)
 
 ## 快速开始
 
