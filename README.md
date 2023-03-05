@@ -29,7 +29,7 @@ RunnerGo致力于打造成一款全栈式测试平台，采用了较为宽松的
 [http://www.runnergo.com/](http://www.runnergo.com/)
 
 ## 快速开始
-
+可自行下载docker或者curl -sSL https://ghproxy.com/https://raw.githubusercontent.com/Runner-Go-Team/runnerGo/main/quick_start.sh | bash安装docker
 仅限linux和macos, 建议使用8c16g配置以上的服务器，配置较低的服务器，可能会报资源不足！！！
 1. 准备docker 和 docker-compose 环境
 2. 从github 下载Runnergo 开源版本
