@@ -3,7 +3,7 @@ services:
   mysql-db:
     image: registry.cn-beijing.aliyuncs.com/runnergo/mysql:5.7.40
     env_file:
-      - ./config/config.env
+      - ./config.env
     volumes:
       - ./mysql/mysql.sql:/docker-entrypoint-initdb.d/mysql.sql:ro
       - ./mysql/data:/var/lib/mysql
@@ -15,14 +15,14 @@ services:
     image: registry.cn-beijing.aliyuncs.com/runnergo/redis:6.2.7
     volumes:
       - ./redis/data:/data
-    command:  redis-server --requirepass mypassword
+    command:  redis-server --requirepass  mypassword
     restart: always
     networks:
       - apipost_net
   mongo-db:
     image: registry.cn-beijing.aliyuncs.com/runnergo/mongo:4.4
     env_file:
-      - ./config/config.env
+      - ./config.env
     volumes:
       - ./mongo/data:/data/db
       - ./mongo/init-mongo.sh:/docker-entrypoint-initdb.d/init-mongo.sh
@@ -30,49 +30,36 @@ services:
     networks:
       - apipost_net
   manage:
-    image: registry.cn-beijing.aliyuncs.com/runnergo/manage:v2.3
+    image: registry.cn-beijing.aliyuncs.com/runnergo/manage:releases-v1.0.0
     restart: always
     env_file:
-      - ./config/config.env
+      - ./config.env
     networks:
       - apipost_net
     ports:
-      - "58889:8080"
+      - "58889:30000"
     depends_on:
       - mysql-db
-    command: ["/bin/wait-for-it.sh","mysql-db:3306","--", "/data/manage/manage", "-c","/data/manage/dev.yaml"]
-  kp-web-ui:
-    image: registry.cn-beijing.aliyuncs.com/runnergo/web-ui:v2.4
+  web-ui:
+    image: registry.cn-beijing.aliyuncs.com/runnergo/web-ui:releases-v1.0.0
     restart: always
-    #volumes:
-    #  - ./nginx/build:/data
-    #  - ./nginx/runner.conf:/etc/nginx/conf.d/runner.conf
     ports:
-      - "80:81"
+      - "9999:81"
       - "58888:82"
     networks:
       - apipost_net
-  runner:
-    image: registry.cn-beijing.aliyuncs.com/runnergo/runner:v2.2
+  engine:
+    image: registry.cn-beijing.aliyuncs.com/runnergo/engine:releases-v1.0.0
     restart: always
     env_file:
-      - ./config/config.env
+      - ./config.env
     networks:
       - apipost_net
-    #ports:
-    #  - "8002:8002"
-    #depends_on:
-    #  - kafka 
-        #command: ["/bin/wait-for-it.sh","kafka:9092","--", "/data/runner/runner", "-c","/data/runner/dev.yaml"]
-    command: |
-      /bin/bash -c '
-      sleep 30  && /data/runner/runner -c /data/runner/dev.yaml ; 
-      '
   file-server:
     image: registry.cn-beijing.aliyuncs.com/runnergo/file-server:v2.2
     restart: always
     env_file:
-      - ./config/config.env
+      - ./config.env
     volumes:
       - ./file-server/data:/app/file-server/file
     networks:
@@ -80,8 +67,6 @@ services:
   zookeeper:
       image: registry.cn-beijing.aliyuncs.com/runnergo/zookeeper:latest 
       restart: always
-      #ports:
-      #    - 2181:2181
       networks:
         - apipost_net
   kafka:
@@ -89,38 +74,19 @@ services:
     restart: always
     depends_on:
         - zookeeper
-    #ports:
-    #  - 9092:9092
-    environment:
-      #KAFKA_ADVERTISED_HOST_NAME: 123.56.141.27
-      #HOSTNAME_COMMAND: "docker info | grep ^Name: | cut -d' ' -f 2"
-      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181/kafka
-      KAFKA_LISTENERS: PLAINTEXT://:9092
-      #KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://192.168.209.128:9092
-      # KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INSIDE:PLAINTEXT,OUTSIDE:PLAINTEXT
-      # KAFKA_ADVERTISED_LISTENERS: INSIDE://:9092,OUTSIDE://_{HOSTNAME_COMMAND}:9094
-      #KAFKA_LISTENERS: INSIDE://:9092,OUTSIDE://:9094
-      #KAFKA_INTER_BROKER_LISTENER_NAME: INSIDE
-      KAFKA_BROKER_ID: 0
-      KAFKA_CREATE_TOPICS: "report:24:1"
+    env_file:
+        - ./config.env
     networks:
       - apipost_net
-        #volumes:
-        #- /var/run/docker.sock:/var/run/docker.sock
   collector:
-      image: registry.cn-beijing.aliyuncs.com/runnergo/collector:v2.4
+      image: registry.cn-beijing.aliyuncs.com/runnergo/collector:master
       restart: always
       env_file:
-        - ./config/config.env
+        - ./config.env
       networks:
         - apipost_net
       depends_on:
         - kafka
-          #command: ["/bin/wait-for-it.sh","kafka:9092","--","/data/collector/collector", "-c","/data/collector/dev.yaml"]
-      command: >
-        /bin/bash -c '
-        sleep 30 &&  /data/collector/collector -c /data/collector/dev.yaml; 
-        '
 networks:
   apipost_net:
     driver: bridge
