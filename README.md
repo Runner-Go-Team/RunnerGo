@@ -32,7 +32,9 @@ RunnerGo致力于打造成一款全栈式测试平台，采用了较为宽松的
 自动安装：
 可自行下载docker自行安装runnergo并启动
 或者
+```
 curl -sSL https://ghproxy.com/https://raw.githubusercontent.com/Runner-Go-Team/runnerGo/main/quick_start.sh | bash
+```
 快速安装docker并启动runnergo服务
 
 手动安装：
