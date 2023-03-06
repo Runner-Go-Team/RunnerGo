@@ -48,15 +48,15 @@ if [ "x${server_url}" == "x" ];then
 fi
 echo "使用 ${server_url} 下载软件包"
 
-#https://github.com/Runner-Go-Team/runnerGo/archive/refs/tags/v0.1.tar.gz
-DOWNLOAD_URL="https://${server_url}/Runner-Go-Team/runnerGo/archive/refs/tags/${RGVERSION}.tar.gz"
+#https://github.com/Runner-Go-Team/RunnerGo/archive/refs/tags/v0.1.tar.gz
+DOWNLOAD_URL="https://${server_url}/Runner-Go-Team/RunnerGo/archive/refs/tags/${RGVERSION}.tar.gz"
 echo "软件包下载地址${DOWNLOAD_URL}"
 wget --no-check-certificate ${DOWNLOAD_URL}
 tar zxvf ${RGVERSION}.tar.gz
 
 #进入软件包
-echo "进入 runnerGo-${RGVERSION:1}"
-cd "runnerGo-${RGVERSION:1}"
+echo "进入 RunnerGo-${RGVERSION:1}"
+cd "RunnerGo-${RGVERSION:1}"
 
 __current_dir=$(
    cd "$(dirname "$0")"
