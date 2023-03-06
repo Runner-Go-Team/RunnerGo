@@ -1,7 +1,7 @@
 #! /bin/sh
 #Install Latest Stable Runner-Go Release
 
-RGVERSION='v0.4'  #RunnerGo版本
+RGVERSION='v1.0.0'  #RunnerGo版本
 RG_BASE='/data' #RunnerGo安装目录
 os=`uname -a`
 
