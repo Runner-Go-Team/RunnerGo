@@ -1,13 +1,12 @@
 version: "3"
 services:
   mysql-db:
-    image: registry.cn-beijing.aliyuncs.com/runnergo/mysql:5.7.40
+    image: registry.cn-beijing.aliyuncs.com/runnergo/mysql:5.7.40.v1
     env_file:
       - ./config.env
     volumes:
       - ./mysql/mysql.sql:/docker-entrypoint-initdb.d/mysql.sql:ro
       - ./mysql/data:/var/lib/mysql
-      - ./mysql/mysql.cnf:/etc/mysql/conf.d/mysql.cnf:ro
     restart: always
     networks:
       - apipost_net
