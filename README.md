@@ -149,7 +149,7 @@ docker-compose ps
 
 6. 关闭runnergo
 ```bash
-docker-compse stop  
+docker-compose stop  
 
 ```
 
