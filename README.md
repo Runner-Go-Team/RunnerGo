@@ -22,6 +22,9 @@ RunnerGo致力于打造成一款全栈式测试平台，采用了较为宽松的
 ### 性能测试报告报告
 ![report](https://apipost.oss-cn-beijing.aliyuncs.com/kunpeng/images/stress_report.jpg)
 
+### 性能测试报告对比
+![报告对比.jpg](https://img.cdn.apipost.cn/client/user/911577/avatar/b566c37d1d68d796bdb0d07229dc5ea5640a96a6efd07.jpg)
+
 ### 自动化测试报告
 ![report](https://apipost.oss-cn-beijing.aliyuncs.com/kunpeng/images/auto_report.jpg)
 
