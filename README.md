@@ -1,6 +1,5 @@
 ![logo](https://apipost.oss-cn-beijing.aliyuncs.com/kunpeng/images/log.png)
 
-https://img.cdn.apipost.cn/client/user/911577/avatar/e87c46835e4048315d4211aae6fab814640afae0f1511.png
 
 ## 基于go语言的一体化性能压测工具
 
