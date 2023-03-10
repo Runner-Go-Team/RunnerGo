@@ -1,5 +1,7 @@
 ![logo](https://apipost.oss-cn-beijing.aliyuncs.com/kunpeng/images/log.png)
 
+https://img.cdn.apipost.cn/client/user/911577/avatar/e87c46835e4048315d4211aae6fab814640afae0f1511.png
+
 ## 基于go语言的一体化性能压测工具
 
 RunnerGo致力于打造成一款全栈式测试平台，采用了较为宽松的Apache-2.0 license开源协议，方便志同道合的朋友一起为开源贡献力量，目前实现了接口测试、场景自动化测试、性能测试等测试能力。随着不断的迭代，我们将会推出更多的测试功能。我们的目的是为研发赋能，让测试更简单。
