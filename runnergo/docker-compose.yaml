@@ -40,7 +40,7 @@ services:
     depends_on:
       - mysql-db
   web-ui:
-    image: registry.cn-beijing.aliyuncs.com/runnergo/web-ui:releases-v1.0.2
+    image: registry.cn-beijing.aliyuncs.com/runnergo/web-ui:releases-v1.0.3
     restart: always
     ports:
       - "9999:81"
@@ -48,7 +48,7 @@ services:
     networks:
       - apipost_net
   engine:
-    image: registry.cn-beijing.aliyuncs.com/runnergo/engine:releases-v1.0.2
+    image: registry.cn-beijing.aliyuncs.com/runnergo/engine:releases-v1.0.3
     restart: always
     env_file:
       - ./config.env
