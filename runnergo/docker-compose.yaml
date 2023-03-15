@@ -40,7 +40,7 @@ services:
     depends_on:
       - mysql-db
   web-ui:
-    image: registry.cn-beijing.aliyuncs.com/runnergo/web-ui:releases-v1.0.3
+    image: registry.cn-beijing.aliyuncs.com/runnergo/web-ui:releases-v1.0.4
     restart: always
     ports:
       - "9999:81"
