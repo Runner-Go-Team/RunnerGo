@@ -78,7 +78,7 @@ services:
     networks:
       - apipost_net
   collector:
-      image: registry.cn-beijing.aliyuncs.com/runnergo/collector:master
+      image: registry.cn-beijing.aliyuncs.com/runnergo/collector:releases-v1.0.3
       restart: always
       env_file:
         - ./config.env
