@@ -1,5 +1,14 @@
 ![logo](https://apipost.oss-cn-beijing.aliyuncs.com/kunpeng/images/log.png)
 
+<p align="center">
+  <a href="https://github.com/Runner-Go-Team/RunnerGo/releases">
+    <img src="https://img.shields.io/badge/releases-v1.0.3-brightgreen.svg" alt="vue">
+   <a href="https://github.com/Runner-Go-Team/RunnerGo/releases">
+    <img src="https://img.shields.io/badge/license-Apache License 2.0-brightgreen.svg" alt="vue">
+ <a href="https://github.com/Runner-Go-Team/RunnerGo/releases/tag/v1.0.3">
+    <img src="https://img.shields.io/badge/download-18.3KB-brightgreen.svg" alt="vue">
+   <a href="https://wiki.runnergo.cn/docs/">
+    <img src="https://img.shields.io/badge/document-RunnerGo-brightgreen.svg" alt="vue">
 
 ## 基于go语言的一体化性能压测工具
 
