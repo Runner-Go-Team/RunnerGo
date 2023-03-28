@@ -29,7 +29,7 @@ services:
     networks:
       - apipost_net
   manage:
-    image: registry.cn-beijing.aliyuncs.com/runnergo/manage:releases-v1.0.3
+    image: registry.cn-beijing.aliyuncs.com/runnergo/manage:releases-v1.0.4
     restart: always
     env_file:
       - ./config.env
