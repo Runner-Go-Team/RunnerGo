@@ -10,6 +10,28 @@
    <a href="https://wiki.runnergo.cn/docs/">
     <img src="https://img.shields.io/badge/document-RunnerGo-brightgreen.svg" alt="vue">
 
+
+## 源码清单
+
+### RunnerGo-management-open
+https://github.com/Runner-Go-Team/RunnerGo-management-open
+
+### RunnerGo-collector-open 
+https://github.com/Runner-Go-Team/RunnerGo-collector-open
+
+### RunnerGo-fe-open
+https://github.com/Runner-Go-Team/RunnerGo-management-open
+
+### RunnerGo-engine-open
+https://github.com/Runner-Go-Team/RunnerGo-engine-open
+
+### file-server 
+https://github.com/Runner-Go-Team/file-server
+
+
+
+
+
 ## 基于go语言的一体化性能压测工具
 
 RunnerGo致力于打造成一款全栈式测试平台，采用了较为宽松的Apache-2.0 license开源协议，方便志同道合的朋友一起为开源贡献力量，目前实现了接口测试、场景自动化测试、性能测试等测试能力。随着不断的迭代，我们将会推出更多的测试功能。我们的目的是为研发赋能，让测试更简单。
