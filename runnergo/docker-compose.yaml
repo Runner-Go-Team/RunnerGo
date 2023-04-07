@@ -55,7 +55,7 @@ services:
     networks:
       - apipost_net
   file-server:
-    image: registry.cn-beijing.aliyuncs.com/runnergo/file-server:v2.2
+    image: registry.cn-beijing.aliyuncs.com/runnergo/file-server:releases-v1.0.1
     restart: always
     env_file:
       - ./config.env
