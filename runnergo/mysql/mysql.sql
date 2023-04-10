@@ -40,13 +40,15 @@ CREATE TABLE `auto_plan` (
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   `deleted_at` datetime DEFAULT NULL COMMENT '删除时间',
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  KEY `idx_plan_id` (`plan_id`),
+  KEY `idx_team_id` (`team_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='自动化测试-计划表';
 
 
 
-
-
+# 转储表 auto_plan_email
+# ------------------------------------------------------------
 
 DROP TABLE IF EXISTS `auto_plan_email`;
 
@@ -63,8 +65,8 @@ CREATE TABLE `auto_plan_email` (
 
 
 
-
-
+# 转储表 auto_plan_report
+# ------------------------------------------------------------
 
 DROP TABLE IF EXISTS `auto_plan_report`;
 
@@ -87,13 +89,15 @@ CREATE TABLE `auto_plan_report` (
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间（执行时间）',
   `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   `deleted_at` datetime DEFAULT NULL COMMENT '删除时间',
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  KEY `idx_report_id` (`report_id`),
+  KEY `idx_team_id` (`team_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='自动化测试计划-报告表';
 
 
 
-
-
+# 转储表 auto_plan_task_conf
+# ------------------------------------------------------------
 
 DROP TABLE IF EXISTS `auto_plan_task_conf`;
 
@@ -109,13 +113,14 @@ CREATE TABLE `auto_plan_task_conf` (
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   `deleted_at` datetime DEFAULT NULL COMMENT '删除时间',
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  KEY `idx_plan_id` (`plan_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='自动化测试—普通任务配置表';
 
 
 
-
-
+# 转储表 auto_plan_timed_task_conf
+# ------------------------------------------------------------
 
 DROP TABLE IF EXISTS `auto_plan_timed_task_conf`;
 
@@ -135,44 +140,14 @@ CREATE TABLE `auto_plan_timed_task_conf` (
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   `deleted_at` datetime DEFAULT NULL COMMENT '删除时间',
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  KEY `idx_plan_id` (`plan_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='自动化测试-定时任务配置表';
 
 
 
-
-
-
-DROP TABLE IF EXISTS `invoice`;
-
-CREATE TABLE `invoice` (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键id',
-  `order_id` varchar(100) NOT NULL COMMENT '订单id',
-  `team_id` varchar(100) NOT NULL COMMENT '团队id',
-  `user_id` varchar(100) NOT NULL DEFAULT '0' COMMENT '开发票人id',
-  `invoice_title` varchar(200) NOT NULL COMMENT '发票抬头',
-  `invoice_type` tinyint(4) NOT NULL DEFAULT '1' COMMENT '发票类型：1-普通发票，2-专业发票',
-  `tax_num` varchar(100) DEFAULT NULL COMMENT '纳税识别号',
-  `company_address` varchar(200) NOT NULL COMMENT '公司地址（开票地址）',
-  `phone` varchar(50) NOT NULL DEFAULT '0' COMMENT '电话号码',
-  `open_bank_name` varchar(200) NOT NULL COMMENT '开户银行名称',
-  `bank_account_num` varchar(100) NOT NULL COMMENT '开户行账号',
-  `receive_email` varchar(100) NOT NULL COMMENT '接受邮箱',
-  `receiver_name` varchar(100) NOT NULL COMMENT '收件人姓名',
-  `receiver_phone` varchar(20) NOT NULL COMMENT '收件人电话',
-  `receiver_address` varchar(200) NOT NULL COMMENT '收件人地址',
-  `open_invoice_mode` tinyint(2) NOT NULL DEFAULT '1' COMMENT '开票方式：1-专票-电子票，2-专票-邮寄',
-  `open_invoice_state` tinyint(2) NOT NULL DEFAULT '0' COMMENT '发票申请状态：0-待开票，1-已开票，2-已作废',
-  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
-  `deleted_at` datetime DEFAULT NULL COMMENT '删除时间',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='发票表';
-
-
-
-
-
+# 转储表 machine
+# ------------------------------------------------------------
 
 DROP TABLE IF EXISTS `machine`;
 
@@ -201,8 +176,8 @@ CREATE TABLE `machine` (
 
 
 
-
-
+# 转储表 operation
+# ------------------------------------------------------------
 
 DROP TABLE IF EXISTS `operation`;
 
@@ -216,47 +191,14 @@ CREATE TABLE `operation` (
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `deleted_at` datetime DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  KEY `idx_team_id` (`team_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 
 
-
-
-
-DROP TABLE IF EXISTS `order`;
-
-CREATE TABLE `order` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键id',
-  `order_id` varchar(200) NOT NULL COMMENT '订单号id',
-  `pay_trade_no` varchar(200) NOT NULL COMMENT '支付中心订单号',
-  `trade_no` varchar(200) NOT NULL COMMENT '第三方订单号',
-  `team_id` varchar(100) NOT NULL COMMENT '团队id',
-  `googs_name` varchar(200) NOT NULL COMMENT '商品名称',
-  `order_type` tinyint(2) NOT NULL DEFAULT '0' COMMENT '订单类型：1-新建团队，2-VUM资源包，3-升级团队，4-增加席位，5-套餐续期',
-  `vum_buy_version_type` tinyint(2) NOT NULL DEFAULT '0' COMMENT 'VUM套餐类型：1-A,2-B,3-C,4-D',
-  `team_buy_version_type` tinyint(2) NOT NULL DEFAULT '0' COMMENT '团队套餐类型：1-个人版，2-团队版，3-企业版',
-  `max_concurrence` int(11) NOT NULL DEFAULT '0' COMMENT '最大并发数',
-  `buy_number` bigint(20) NOT NULL DEFAULT '0' COMMENT '购买数量（席位数量/VUM资源包数量）',
-  `order_amount` double NOT NULL DEFAULT '0' COMMENT '订单金额',
-  `discounts` double NOT NULL DEFAULT '0' COMMENT '优惠金额',
-  `real_amount` double NOT NULL DEFAULT '0' COMMENT '实际付款金额',
-  `pay_type` tinyint(4) NOT NULL DEFAULT '1' COMMENT '支付方式：0-未知，1-微信，2-支付宝，3-银联，4-PayPal',
-  `pay_status` tinyint(4) NOT NULL DEFAULT '0' COMMENT '支付状态：0-待支付，1-支付成功，2-支付失败，3-支付中，4-已过期，5-已关闭',
-  `goods_valid_date` int(11) NOT NULL DEFAULT '0' COMMENT '商品的有效期（单位：月）',
-  `finish_pay_time` datetime DEFAULT NULL COMMENT '到账时间',
-  `open_invoice_state` tinyint(2) NOT NULL DEFAULT '0' COMMENT '发票申请状态：0-待开票，1-已开票，2-已作废',
-  `pay_user_id` varchar(100) NOT NULL DEFAULT '0' COMMENT '支付人id',
-  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
-  `deleted_at` datetime DEFAULT NULL COMMENT '删除时间',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='订单表';
-
-
-
-
-
+# 转储表 preinstall_conf
+# ------------------------------------------------------------
 
 DROP TABLE IF EXISTS `preinstall_conf`;
 
@@ -274,13 +216,14 @@ CREATE TABLE `preinstall_conf` (
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   `deleted_at` timestamp NULL DEFAULT NULL COMMENT '删除时间',
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  KEY `idx_team_id` (`team_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='预设配置表';
 
 
 
-
-
+# 转储表 report_machine
+# ------------------------------------------------------------
 
 DROP TABLE IF EXISTS `report_machine`;
 
@@ -293,13 +236,14 @@ CREATE TABLE `report_machine` (
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   `deleted_at` datetime DEFAULT NULL COMMENT '删除时间',
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  KEY `idx_report_id` (`report_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 
 
-
-
+# 转储表 setting
+# ------------------------------------------------------------
 
 DROP TABLE IF EXISTS `setting`;
 
@@ -311,13 +255,13 @@ CREATE TABLE `setting` (
   `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `deleted_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `setting_user_id_uindex` (`user_id`)
+  KEY `idx_user_id` (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='设置表';
 
 
 
-
-
+# 转储表 sms_log
+# ------------------------------------------------------------
 
 DROP TABLE IF EXISTS `sms_log`;
 
@@ -341,8 +285,8 @@ CREATE TABLE `sms_log` (
 
 
 
-
-
+# 转储表 stress_plan
+# ------------------------------------------------------------
 
 DROP TABLE IF EXISTS `stress_plan`;
 
@@ -362,13 +306,15 @@ CREATE TABLE `stress_plan` (
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
   `deleted_at` datetime DEFAULT NULL COMMENT '删除时间',
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  KEY `idx_plan_id` (`plan_id`),
+  KEY `idx_team_id` (`team_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='性能计划表';
 
 
 
-
-
+# 转储表 stress_plan_email
+# ------------------------------------------------------------
 
 DROP TABLE IF EXISTS `stress_plan_email`;
 
@@ -380,13 +326,14 @@ CREATE TABLE `stress_plan_email` (
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
   `deleted_at` datetime DEFAULT NULL COMMENT '删除时间',
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  KEY `idx_plan_id` (`plan_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='性能计划收件人';
 
 
 
-
-
+# 转储表 stress_plan_report
+# ------------------------------------------------------------
 
 DROP TABLE IF EXISTS `stress_plan_report`;
 
@@ -408,13 +355,15 @@ CREATE TABLE `stress_plan_report` (
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间（执行时间）',
   `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
   `deleted_at` datetime DEFAULT NULL COMMENT '删除时间',
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  KEY `idx_report_id` (`report_id`),
+  KEY `idx_team_id` (`team_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='性能测试报告表';
 
 
 
-
-
+# 转储表 stress_plan_task_conf
+# ------------------------------------------------------------
 
 DROP TABLE IF EXISTS `stress_plan_task_conf`;
 
@@ -431,20 +380,22 @@ CREATE TABLE `stress_plan_task_conf` (
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   `deleted_at` datetime DEFAULT NULL COMMENT '删除时间',
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  KEY `idx_plan_id` (`plan_id`),
+  KEY `idx_scene_id` (`scene_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='性能计划—普通任务配置表';
 
 
 
-
-
+# 转储表 stress_plan_timed_task_conf
+# ------------------------------------------------------------
 
 DROP TABLE IF EXISTS `stress_plan_timed_task_conf`;
 
 CREATE TABLE `stress_plan_timed_task_conf` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '表id',
   `plan_id` varchar(100) NOT NULL COMMENT '计划id',
-  `sence_id` varchar(100) NOT NULL COMMENT '场景id',
+  `scene_id` varchar(100) NOT NULL COMMENT '场景id',
   `team_id` varchar(100) NOT NULL COMMENT '团队id',
   `user_id` varchar(100) NOT NULL COMMENT '用户ID',
   `frequency` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '任务执行频次: 0-一次，1-每天，2-每周，3-每月',
@@ -459,13 +410,15 @@ CREATE TABLE `stress_plan_timed_task_conf` (
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   `deleted_at` datetime DEFAULT NULL COMMENT '删除时间',
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  KEY `idx_plan_id` (`plan_id`),
+  KEY `idx_scene_id` (`scene_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='性能计划-定时任务配置表';
 
 
 
-
-
+# 转储表 target
+# ------------------------------------------------------------
 
 DROP TABLE IF EXISTS `target`;
 
@@ -491,13 +444,16 @@ CREATE TABLE `target` (
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   `deleted_at` datetime DEFAULT NULL COMMENT '删除时间',
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  KEY `idx_target_id` (`target_id`),
+  KEY `idx_plan_id` (`plan_id`),
+  KEY `idx_team_id` (`team_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='创建目标';
 
 
 
-
-
+# 转储表 target_debug_log
+# ------------------------------------------------------------
 
 DROP TABLE IF EXISTS `target_debug_log`;
 
@@ -509,13 +465,14 @@ CREATE TABLE `target_debug_log` (
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   `deleted_at` datetime DEFAULT NULL COMMENT '删除时间',
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  KEY `idx_target_id` (`target_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='目标调试日志表';
 
 
 
-
-
+# 转储表 team
+# ------------------------------------------------------------
 
 DROP TABLE IF EXISTS `team`;
 
@@ -534,38 +491,14 @@ CREATE TABLE `team` (
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `deleted_at` datetime DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  KEY `idx_team_id` (`team_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='团队表';
 
 
 
-
-
-
-DROP TABLE IF EXISTS `team_buy_version`;
-
-CREATE TABLE `team_buy_version` (
-  `id` int(10) NOT NULL AUTO_INCREMENT COMMENT '主键id',
-  `title` varchar(50) NOT NULL COMMENT '购买套餐名称',
-  `unit_price` double NOT NULL DEFAULT '0' COMMENT '单人单月定价',
-  `unit_price_explain` varchar(100) NOT NULL COMMENT '单人单月定价说明',
-  `detail` text NOT NULL COMMENT '套餐详情',
-  `min_user_num` bigint(20) NOT NULL DEFAULT '0' COMMENT '最少团队成员数',
-  `max_user_num` bigint(20) NOT NULL DEFAULT '0' COMMENT '最大团队成员数',
-  `max_concurrence` bigint(20) NOT NULL DEFAULT '0' COMMENT '最大并发数',
-  `max_api_num` bigint(20) NOT NULL DEFAULT '0' COMMENT '最大接口数',
-  `max_run_time` bigint(20) NOT NULL DEFAULT '0' COMMENT '最大运行时长',
-  `give_vun_num` bigint(20) NOT NULL DEFAULT '0' COMMENT '赠送VUM配额',
-  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
-  `deleted_at` datetime DEFAULT NULL COMMENT '删除时间',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='团队套餐信息表';
-
-
-
-
-
+# 转储表 team_env
+# ------------------------------------------------------------
 
 DROP TABLE IF EXISTS `team_env`;
 
@@ -580,13 +513,14 @@ CREATE TABLE `team_env` (
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `deleted_at` datetime DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  KEY `idx_team_id` (`team_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='团队环境管理';
 
 
 
-
-
+# 转储表 team_env_service
+# ------------------------------------------------------------
 
 DROP TABLE IF EXISTS `team_env_service`;
 
@@ -603,13 +537,14 @@ CREATE TABLE `team_env_service` (
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `deleted_at` datetime DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  KEY `idxx_team_id` (`team_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='团队环境服务管理';
 
 
 
-
-
+# 转储表 team_user_queue
+# ------------------------------------------------------------
 
 DROP TABLE IF EXISTS `team_user_queue`;
 
@@ -620,13 +555,14 @@ CREATE TABLE `team_user_queue` (
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `deleted_at` datetime DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  KEY `idx_team_id` (`team_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='邀请待注册队列';
 
 
 
-
-
+# 转储表 user
+# ------------------------------------------------------------
 
 DROP TABLE IF EXISTS `user`;
 
@@ -644,13 +580,14 @@ CREATE TABLE `user` (
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `deleted_at` datetime DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  KEY `idx_user_id` (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='用户表';
 
 
 
-
-
+# 转储表 user_collect_info
+# ------------------------------------------------------------
 
 DROP TABLE IF EXISTS `user_collect_info`;
 
@@ -663,13 +600,14 @@ CREATE TABLE `user_collect_info` (
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
   `deleted_at` datetime DEFAULT NULL COMMENT '删除时间',
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  KEY `idx_user_id` (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 
 
-
-
+# 转储表 user_team
+# ------------------------------------------------------------
 
 DROP TABLE IF EXISTS `user_team`;
 
@@ -684,14 +622,13 @@ CREATE TABLE `user_team` (
   `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `deleted_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `user_team_team_id_deleted_at_index` (`team_id`,`deleted_at`),
-  KEY `user_team_user_id_deleted_at_index` (`user_id`,`deleted_at`)
+  KEY `idx_team_id` (`team_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='用户团队关系表';
 
 
 
-
-
+# 转储表 variable
+# ------------------------------------------------------------
 
 DROP TABLE IF EXISTS `variable`;
 
@@ -707,13 +644,15 @@ CREATE TABLE `variable` (
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
   `deleted_at` datetime DEFAULT NULL COMMENT '删除时间',
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  KEY `idx_team_id` (`team_id`),
+  KEY `idx_scene_id` (`scene_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='设置变量表';
 
 
 
-
-
+# 转储表 variable_import
+# ------------------------------------------------------------
 
 DROP TABLE IF EXISTS `variable_import`;
 
@@ -728,53 +667,44 @@ CREATE TABLE `variable_import` (
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
   `deleted_at` datetime DEFAULT NULL COMMENT '删除时间',
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  KEY `idx_team_id` (`team_id`),
+  KEY `idx_scene_id` (`scene_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='导入变量表';
 
 
 
+# 转储表 public_function
+# ------------------------------------------------------------
 
+DROP TABLE IF EXISTS `public_function`;
 
-
-DROP TABLE IF EXISTS `vum_buy_version`;
-
-CREATE TABLE `vum_buy_version` (
-  `id` int(10) NOT NULL AUTO_INCREMENT COMMENT '主键id',
-  `vum_buy_version_type` tinyint(2) NOT NULL DEFAULT '0' COMMENT 'vum套餐类型：1-套餐资源A，2-套餐资源B，3-套餐资源C，4-套餐资源D',
-  `title` varchar(50) NOT NULL COMMENT '购买套餐名称',
-  `vum_count` bigint(20) NOT NULL DEFAULT '0' COMMENT 'VUM额度',
-  `max_concurrent` bigint(20) NOT NULL DEFAULT '0' COMMENT '最大并发数',
-  `unit_price` double NOT NULL DEFAULT '0' COMMENT '单价',
-  `discounts` double NOT NULL DEFAULT '0' COMMENT '优惠价格',
+CREATE TABLE `public_function` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键id',
+  `function` varchar(255) NOT NULL COMMENT '函数',
+  `function_name` varchar(255) NOT NULL COMMENT '函数名称',
+  `remark` text NOT NULL COMMENT '备注',
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
   `deleted_at` datetime DEFAULT NULL COMMENT '删除时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='VUM套餐信息表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 
-
-
-
-
-DROP TABLE IF EXISTS `vum_use_log`;
-
-CREATE TABLE `vum_use_log` (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键id',
-  `team_id` varchar(100) NOT NULL COMMENT '团队id',
-  `plan_id` varchar(100) NOT NULL COMMENT '计划id',
-  `plan_name` varchar(100) NOT NULL COMMENT '计划名称',
-  `task_type` tinyint(4) NOT NULL DEFAULT '1' COMMENT '任务类型：1-普通任务，2-定时任务',
-  `task_mode` tinyint(4) NOT NULL DEFAULT '1' COMMENT '压测模式：1-并发模式，2-阶梯模式，3-错误率模式，4-响应时间模式，5-每秒请求数模式，6 -每秒事务数模式',
-  `run_time` datetime NOT NULL COMMENT '运行时间',
-  `run_user_id` varchar(100) NOT NULL COMMENT '执行者id',
-  `concurrence_num` int(11) NOT NULL DEFAULT '0' COMMENT '并发数',
-  `concurrence_minute` int(11) NOT NULL DEFAULT '0' COMMENT '并发时长（单位分钟）',
-  `vum_consume_num` bigint(20) NOT NULL DEFAULT '0' COMMENT 'VUM使用量',
-  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
-  `deleted_at` datetime DEFAULT NULL COMMENT '删除时间',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='VUM使用日志表';
+# 初始化公共函数数据
+INSERT INTO `public_function` (`id`, `function`, `function_name`, `remark`, `created_at`, `updated_at`, `deleted_at`)
+VALUES
+	(NULL, 'md5(string)', 'md5加密', '{{__MD5(ABC)__}}, 加密字符串', '2023-03-28 14:19:24', '2023-03-28 14:27:24', NULL),
+	(NULL, 'SHA256(string)', 'sha256加密', '{{__SHA256(ABC)__}}, 加密字符串', '2023-03-28 14:19:53', '2023-03-28 14:19:53', NULL),
+	(NULL, 'SHA512(string)', 'sha512加密', '{{__SHA512(ABC)__}}, 加密字符串', '2023-03-28 14:21:36', '2023-03-28 14:21:47', NULL),
+	(NULL, 'IdCard(isEighteen, address, birthday, sex)', '身份证号生成', '{{__IdCard(true, 北京市, 2000, 1)__}}, 北京市男2000年出生18位身份证号。\n\n// IdCard 根据参数生成身份证号\n\n// isEighteen 是否生成18位号码\n\n// address 省市县三级地区官方全称: 如\'北京市\'、\'台湾省\'、\'香港特别行政区\'、\'深圳市\'、\'黄浦区\'\n\n// birthday 出生日期: 如 \'2000\'、\'199801\'、\'19990101\'\n\n// sex 性别: 1为男性, 0为女性', '2023-03-28 14:22:24', '2023-03-28 14:22:24', NULL),
+	(NULL, 'RandomIdCard()', '随机生成身份证号', '{{__RandomIdCard()__}}, 随机身份证号', '2023-03-28 14:23:01', '2023-03-28 14:23:01', NULL),
+	(NULL, 'VerifyIdCard(cardId, strict)', '身份证号校验', '{{__VerifyIdCard(231231, true)}}, 结果: false', '2023-03-28 14:23:35', '2023-03-28 14:23:43', NULL),
+	(NULL, '{{__VerifyIdCard(231231, true)}}, 结果: false', '改变字符串大小写', '{{__ToStringLU(abc, L)__}}, 全部小写', '2023-03-28 14:24:04', '2023-03-28 14:24:04', NULL),
+	(NULL, 'RandomInt(start,  end)', '随机数生成(整数)', '{{__RandomInt(start, end)__}}, 随机生成start-end之间的整数', '2023-03-28 14:24:34', '2023-03-28 14:24:34', NULL),
+	(NULL, 'RandomFloat0()', '随机数生成(小数)', '{{__RandomFloat0()__}}, 随机生成0-1之间的小数', '2023-03-28 14:25:11', '2023-03-28 14:25:11', NULL),
+	(NULL, 'RandomString(num int)', '随机数生成(字符串)', '{{__RandomString(5)__}}, 随机生成5位由a-z、0-9、A-Z之间英文字组成的字符串', '2023-03-28 14:25:35', '2023-03-28 14:26:14', NULL),
+	(NULL, 'Uuid()', '生成uuid', '{{__GetUUid()__}}, 随机生成uuid', '2023-03-28 14:25:57', '2023-03-28 14:25:57', NULL),
+	(NULL, 'ToTimeStamp(option)', '时间戳', '{{__ToTimeStamp(s)__}}, 生成秒级时间戳字符串\n\noption: s, ms, ns, ws; 分别是秒; 毫秒; 纳秒; 微秒', '2023-03-28 14:26:35', '2023-03-28 14:26:35', NULL);
 
 
