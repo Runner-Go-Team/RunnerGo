@@ -29,7 +29,7 @@ services:
     networks:
       - apipost_net
   manage:
-    image: registry.cn-beijing.aliyuncs.com/runnergo/manage:releases-v1.0.5
+    image: registry.cn-beijing.aliyuncs.com/runnergo/manage:releases-v1.1.0
     restart: always
     env_file:
       - ./config.env
@@ -39,8 +39,19 @@ services:
       - "58889:30000"
     depends_on:
       - mysql-db
+  manage-ws:
+    image: registry.cn-beijing.aliyuncs.com/runnergo/manage-ws:releases-v1.1.0
+    restart: always
+    env_file:
+      - ./config.env
+    networks:
+      - apipost_net
+    ports:
+      - "58887:30000"
+    depends_on:
+      - mysql-db
   web-ui:
-    image: registry.cn-beijing.aliyuncs.com/runnergo/web-ui:releases-v1.0.5
+    image: registry.cn-beijing.aliyuncs.com/runnergo/web-ui:releases-v1.1.0
     restart: always
     ports:
       - "9999:81"
