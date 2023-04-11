@@ -13,6 +13,9 @@
 
 ## 源码清单
 
+### RunnerGo-management-websocket-open
+https://github.com/Runner-Go-Team/RunnerGo-management-websocket-open
+
 ### RunnerGo-management-open
 https://github.com/Runner-Go-Team/RunnerGo-management-open
 
