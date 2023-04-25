@@ -1,4 +1,3 @@
-.DS_Store
 kunpeng/file-server/data
 kunpeng/mongo/data
 kunpeng/mysql/data/kunpeng
@@ -11,4 +10,8 @@ runnergo/mysql/data/kunpeng
 runnergo/mysql/data/mysql
 runnergo/mysql/data
 runnergo/redis/data
+
+# project
+.idea
+.DS_Store
 
