@@ -2,7 +2,7 @@
 
 <p align="center">
   <a href="https://github.com/Runner-Go-Team/RunnerGo/releases">
-    <img src="https://img.shields.io/badge/releases-v1.0.4-brightgreen.svg" alt="vue">
+    <img src="https://img.shields.io/badge/releases-v1.1.3-brightgreen.svg" alt="vue">
    <a href="https://github.com/Runner-Go-Team/RunnerGo/releases">
     <img src="https://img.shields.io/badge/license-Apache License 2.0-brightgreen.svg" alt="vue">
  <a href="https://github.com/Runner-Go-Team/RunnerGo/releases/tag/v1.0.3">
