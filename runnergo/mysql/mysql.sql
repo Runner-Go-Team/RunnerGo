@@ -1,3 +1,5 @@
+SET NAMES utf8mb4;
+
 # 转储表 auto_plan
 # ------------------------------------------------------------
 
@@ -51,6 +53,7 @@ DROP TABLE IF EXISTS `auto_plan_report`;
 CREATE TABLE `auto_plan_report` (
                                     `id` bigint(20) NOT NULL AUTO_INCREMENT,
                                     `report_id` varchar(100) NOT NULL COMMENT '报告ID',
+                                    `report_name` varchar(125) NOT NULL COMMENT '报告名称',
                                     `plan_id` varchar(100) NOT NULL COMMENT '计划ID',
                                     `rank_id` bigint(20) NOT NULL DEFAULT '0' COMMENT '序号ID',
                                     `plan_name` varchar(255) NOT NULL COMMENT '计划名称',
@@ -176,23 +179,18 @@ CREATE TABLE `machine` (
 
 
 
-# 转储表 operation
+# 转储表 migrations
 # ------------------------------------------------------------
 
-DROP TABLE IF EXISTS `operation`;
+DROP TABLE IF EXISTS `migrations`;
 
-CREATE TABLE `operation` (
-                             `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键id',
-                             `team_id` varchar(100) NOT NULL COMMENT '团队ID',
-                             `user_id` varchar(100) NOT NULL COMMENT '用户ID',
-                             `category` tinyint(4) NOT NULL DEFAULT '0' COMMENT '日志类型：1-新建，2-修改，3-删除，4-运行，5-调试，6-执行',
-                             `operate` tinyint(4) DEFAULT NULL COMMENT '{"操作类型":{1:创建文件夹,2:创建接口,3:创建分组,4:创建计划,5:创建场景,6:修改文件夹,7:修改接口,8:修改分组,9:修改计划,10:修改场景,11:克隆计划,12:删除报告,13:删除场景,14:删除计划,15:运行场景,16:运行计划,17:新建预设配置,18:修改并保存预设配置,19:删除预设配置}}',
-                             `name` varchar(255) NOT NULL,
-                             `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-                             `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-                             `deleted_at` datetime DEFAULT NULL,
-                             PRIMARY KEY (`id`),
-                             KEY `idx_team_id` (`team_id`)
+CREATE TABLE `migrations` (
+                              `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键id',
+                              `version` varchar(50) NOT NULL COMMENT '版本号',
+                              `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+                              `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
+                              `deleted_at` datetime DEFAULT NULL COMMENT '删除时间',
+                              PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 
@@ -383,6 +381,7 @@ DROP TABLE IF EXISTS `stress_plan_report`;
 CREATE TABLE `stress_plan_report` (
                                       `id` bigint(20) NOT NULL AUTO_INCREMENT,
                                       `report_id` varchar(100) NOT NULL COMMENT '报告ID',
+                                      `report_name` varchar(125) NOT NULL COMMENT '报告名称',
                                       `team_id` varchar(100) NOT NULL COMMENT '团队ID',
                                       `plan_id` varchar(100) NOT NULL COMMENT '计划ID',
                                       `rank_id` bigint(20) NOT NULL DEFAULT '0' COMMENT '序号ID',
@@ -483,7 +482,7 @@ CREATE TABLE `target` (
                           `created_user_id` varchar(100) NOT NULL COMMENT '创建人ID',
                           `recent_user_id` varchar(100) NOT NULL COMMENT '最近修改人ID',
                           `description` text NOT NULL COMMENT '备注',
-                          `source` tinyint(4) NOT NULL DEFAULT '1' COMMENT '数据来源：1-正常来源，2-性能，3-自动化测试',
+                          `source` tinyint(4) NOT NULL DEFAULT '0' COMMENT '数据来源：0-接口管理，1-场景管理，2-性能，3-自动化测试',
                           `plan_id` varchar(100) NOT NULL DEFAULT '0' COMMENT '计划id',
                           `source_id` varchar(100) NOT NULL COMMENT '引用来源ID',
                           `is_checked` tinyint(2) NOT NULL DEFAULT '1' COMMENT '是否开启：1-开启，2-关闭',
@@ -526,6 +525,8 @@ CREATE TABLE `team` (
                         `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键ID',
                         `team_id` varchar(100) NOT NULL COMMENT '团队ID',
                         `name` varchar(64) NOT NULL COMMENT '团队名称',
+                        `description` text COMMENT '团队描述',
+                        `company_id` varchar(100) NOT NULL DEFAULT '' COMMENT '所属企业id',
                         `type` tinyint(4) NOT NULL COMMENT '团队类型 1: 私有团队；2: 普通团队',
                         `trial_expiration_date` datetime NOT NULL COMMENT '试用有效期',
                         `is_vip` tinyint(2) NOT NULL DEFAULT '1' COMMENT '是否为付费团队 1-否 2-是',
@@ -615,6 +616,7 @@ DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user` (
                         `id` bigint(20) NOT NULL AUTO_INCREMENT,
                         `user_id` varchar(100) NOT NULL COMMENT '用户id',
+                        `account` varchar(100) NOT NULL DEFAULT '' COMMENT '账号',
                         `email` varchar(100) NOT NULL COMMENT '邮箱',
                         `mobile` char(11) NOT NULL COMMENT '手机号',
                         `password` varchar(255) NOT NULL COMMENT '密码',
@@ -662,7 +664,9 @@ CREATE TABLE `user_team` (
                              `user_id` varchar(100) NOT NULL COMMENT '用户ID',
                              `team_id` varchar(100) NOT NULL COMMENT '团队id',
                              `role_id` bigint(20) NOT NULL COMMENT '角色id1:超级管理员，2成员，3管理员',
+                             `team_role_id` varchar(100) NOT NULL DEFAULT '' COMMENT '角色id (角色表对应)',
                              `invite_user_id` varchar(100) NOT NULL DEFAULT '0' COMMENT '邀请人id',
+                             `invite_time` datetime DEFAULT NULL COMMENT '邀请时间',
                              `sort` int(11) NOT NULL DEFAULT '0',
                              `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
                              `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -718,7 +722,6 @@ CREATE TABLE `variable_import` (
                                    KEY `idx_scene_id` (`scene_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='导入变量表';
 
-
 # 初始化公共函数数据
 INSERT INTO `public_function` (`id`, `function`, `function_name`, `remark`, `created_at`, `updated_at`, `deleted_at`)
 VALUES
@@ -736,11 +739,3 @@ VALUES
   (NULL, 'ToTimeStamp(option)', '时间戳', '{{__ToTimeStamp(s)__}}, 生成秒级时间戳字符串\n\noption: s, ms, ns, ws; 分别是秒; 毫秒; 纳秒; 微秒', '2023-03-28 14:26:35', '2023-03-28 14:26:35', NULL);
 
 
-
-
-/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
-/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
-/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

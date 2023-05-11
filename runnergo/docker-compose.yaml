@@ -29,7 +29,7 @@ services:
     networks:
       - apipost_net
   manage:
-    image: registry.cn-beijing.aliyuncs.com/runnergo/manage:releases-v1.1.1
+    image: registry.cn-beijing.aliyuncs.com/runnergo/manage:releases-v1.1.2
     restart: always
     env_file:
       - ./config.env
@@ -40,7 +40,7 @@ services:
     depends_on:
       - mysql-db
   manage-ws:
-    image: registry.cn-beijing.aliyuncs.com/runnergo/manage-ws:releases-v1.1.1
+    image: registry.cn-beijing.aliyuncs.com/runnergo/manage-ws:releases-v1.1.2
     restart: always
     env_file:
       - ./config.env
@@ -51,7 +51,7 @@ services:
     depends_on:
       - mysql-db
   web-ui:
-    image: registry.cn-beijing.aliyuncs.com/runnergo/web-ui:releases-v1.1.3
+    image: registry.cn-beijing.aliyuncs.com/runnergo/web-ui:releases-v1.1.4
     restart: always
     ports:
       - "9999:81"
@@ -59,7 +59,7 @@ services:
     networks:
       - apipost_net
   engine:
-    image: registry.cn-beijing.aliyuncs.com/runnergo/engine:releases-v1.1.0
+    image: registry.cn-beijing.aliyuncs.com/runnergo/engine:releases-v1.1.1
     restart: always
     env_file:
       - ./config.env
@@ -75,28 +75,28 @@ services:
     networks:
       - apipost_net
   zookeeper:
-      image: registry.cn-beijing.aliyuncs.com/runnergo/zookeeper:latest 
-      restart: always
-      networks:
-        - apipost_net
+    image: registry.cn-beijing.aliyuncs.com/runnergo/zookeeper:latest
+    restart: always
+    networks:
+      - apipost_net
   kafka:
-    image: registry.cn-beijing.aliyuncs.com/runnergo/kafka:2.13-3.2.1 
+    image: registry.cn-beijing.aliyuncs.com/runnergo/kafka:2.13-3.2.1
     restart: always
     depends_on:
-        - zookeeper
+      - zookeeper
     env_file:
-        - ./config.env
+      - ./config.env
     networks:
       - apipost_net
   collector:
-      image: registry.cn-beijing.aliyuncs.com/runnergo/collector:releases-v1.0.2
-      restart: always
-      env_file:
-        - ./config.env
-      networks:
-        - apipost_net
-      depends_on:
-        - kafka
+    image: registry.cn-beijing.aliyuncs.com/runnergo/collector:releases-v1.0.3
+    restart: always
+    env_file:
+      - ./config.env
+    networks:
+      - apipost_net
+    depends_on:
+      - kafka
 networks:
   apipost_net:
     driver: bridge
