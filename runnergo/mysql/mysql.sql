@@ -723,19 +723,19 @@ CREATE TABLE `variable_import` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='导入变量表';
 
 # 初始化公共函数数据
-INSERT INTO `public_function` (`id`, `function`, `function_name`, `remark`, `created_at`, `updated_at`, `deleted_at`)
+INSERT INTO `public_function` (`function`, `function_name`, `remark`, `created_at`, `updated_at`, `deleted_at`)
 VALUES
-  (NULL, 'md5(string)', 'md5加密', '{{__MD5(ABC)__}}, 加密字符串', '2023-03-28 14:19:24', '2023-03-28 14:27:24', NULL),
-  (NULL, 'SHA256(string)', 'sha256加密', '{{__SHA256(ABC)__}}, 加密字符串', '2023-03-28 14:19:53', '2023-03-28 14:19:53', NULL),
-  (NULL, 'SHA512(string)', 'sha512加密', '{{__SHA512(ABC)__}}, 加密字符串', '2023-03-28 14:21:36', '2023-03-28 14:21:47', NULL),
-  (NULL, 'IdCard(isEighteen, address, birthday, sex)', '身份证号生成', '{{__IdCard(true, 北京市, 2000, 1)__}}, 北京市男2000年出生18位身份证号。\n\n// IdCard 根据参数生成身份证号\n\n// isEighteen 是否生成18位号码\n\n// address 省市县三级地区官方全称: 如\'北京市\'、\'台湾省\'、\'香港特别行政区\'、\'深圳市\'、\'黄浦区\'\n\n// birthday 出生日期: 如 \'2000\'、\'199801\'、\'19990101\'\n\n// sex 性别: 1为男性, 0为女性', '2023-03-28 14:22:24', '2023-03-28 14:22:24', NULL),
-  (NULL, 'RandomIdCard()', '随机生成身份证号', '{{__RandomIdCard()__}}, 随机身份证号', '2023-03-28 14:23:01', '2023-03-28 14:23:01', NULL),
-  (NULL, 'VerifyIdCard(cardId, strict)', '身份证号校验', '{{__VerifyIdCard(231231, true)}}, 结果: false', '2023-03-28 14:23:35', '2023-03-28 14:23:43', NULL),
-  (NULL, '{{__VerifyIdCard(231231, true)}}, 结果: false', '改变字符串大小写', '{{__ToStringLU(abc, L)__}}, 全部小写', '2023-03-28 14:24:04', '2023-03-28 14:24:04', NULL),
-  (NULL, 'RandomInt(start,  end)', '随机数生成(整数)', '{{__RandomInt(start, end)__}}, 随机生成start-end之间的整数', '2023-03-28 14:24:34', '2023-03-28 14:24:34', NULL),
-  (NULL, 'RandomFloat0()', '随机数生成(小数)', '{{__RandomFloat0()__}}, 随机生成0-1之间的小数', '2023-03-28 14:25:11', '2023-03-28 14:25:11', NULL),
-  (NULL, 'RandomString(num int)', '随机数生成(字符串)', '{{__RandomString(5)__}}, 随机生成5位由a-z、0-9、A-Z之间英文字组成的字符串', '2023-03-28 14:25:35', '2023-03-28 14:26:14', NULL),
-  (NULL, 'Uuid()', '生成uuid', '{{__GetUUid()__}}, 随机生成uuid', '2023-03-28 14:25:57', '2023-03-28 14:25:57', NULL),
-  (NULL, 'ToTimeStamp(option)', '时间戳', '{{__ToTimeStamp(s)__}}, 生成秒级时间戳字符串\n\noption: s, ms, ns, ws; 分别是秒; 毫秒; 纳秒; 微秒', '2023-03-28 14:26:35', '2023-03-28 14:26:35', NULL);
+    ('md5(string)', 'md5加密', '{{__MD5(ABC)__}}, 加密字符串', '2023-03-28 14:19:24', '2023-03-28 14:27:24', NULL),
+    ('SHA256(string)', 'sha256加密', '{{__SHA256(ABC)__}}, 加密字符串', '2023-03-28 14:19:53', '2023-03-28 14:19:53', NULL),
+    ('SHA512(string)', 'sha512加密', '{{__SHA512(ABC)__}}, 加密字符串', '2023-03-28 14:21:36', '2023-03-28 14:21:47', NULL),
+    ('IdCard(isEighteen, address, birthday, sex)', '身份证号生成', '{{__IdCard(true, 北京市, 2000, 1)__}}, 北京市男2000年出生18位身份证号。\nIdCard 根据参数生成身份证号。\nisEighteen 是否生成18位号码。\naddress 省市县三级地区官方全称: 如\'北京市\'、\'台湾省\'、\'香港特别行政区\'、\'深圳市\'、\'黄浦区\'。\nbirthday 出生日期: 如 \'2000\'、\'199801\'、\'19990101\'。\nsex 性别: 1为男性, 0为女性。', '2023-03-28 14:22:24', '2023-05-12 17:16:27', NULL),
+    ('RandomIdCard()', '随机生成身份证号', '{{__RandomIdCard()__}}, 随机身份证号', '2023-03-28 14:23:01', '2023-03-28 14:23:01', NULL),
+    ('VerifyIdCard(cardId, strict)', '身份证号校验', '{{__VerifyIdCard(231231, true)}}, 结果: false', '2023-03-28 14:23:35', '2023-03-28 14:23:43', NULL),
+    ('{{__VerifyIdCard(231231, true)}}, 结果: false', '改变字符串大小写', '{{__ToStringLU(abc, L)__}}, 全部小写', '2023-03-28 14:24:04', '2023-03-28 14:24:04', NULL),
+    ('RandomInt(start,  end)', '随机数生成(整数)', '{{__RandomInt(start, end)__}}, 随机生成start-end之间的整数', '2023-03-28 14:24:34', '2023-03-28 14:24:34', NULL),
+    ('RandomFloat0()', '随机数生成(小数)', '{{__RandomFloat0()__}}, 随机生成0-1之间的小数', '2023-03-28 14:25:11', '2023-03-28 14:25:11', NULL),
+    ('RandomString(num int)', '随机数生成(字符串)', '{{__RandomString(5)__}}, 随机生成5位由a-z、0-9、A-Z之间英文字组成的字符串', '2023-03-28 14:25:35', '2023-03-28 14:26:14', NULL),
+    ('Uuid()', '生成uuid', '{{__GetUUid()__}}, 随机生成uuid', '2023-03-28 14:25:57', '2023-03-28 14:25:57', NULL),
+    ('ToTimeStamp(option)', '时间戳', '{{__ToTimeStamp(s)__}}, 生成秒级时间戳字符串 option: s, ms, ns, ws; 分别是秒; 毫秒; 纳秒; 微秒', '2023-03-28 14:26:35', '2023-04-13 18:14:05', NULL);
 
 
