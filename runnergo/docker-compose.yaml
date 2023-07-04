@@ -29,7 +29,7 @@ services:
     networks:
       - apipost_net
   manage:
-    image: registry.cn-beijing.aliyuncs.com/runnergo/manage:releases-v1.1.2
+    image: registry.cn-beijing.aliyuncs.com/runnergo/manage:releases-v2.0.0
     restart: always
     env_file:
       - ./config.env
@@ -40,7 +40,7 @@ services:
     depends_on:
       - mysql-db
   manage-ws:
-    image: registry.cn-beijing.aliyuncs.com/runnergo/manage-ws:releases-v1.1.2
+    image: registry.cn-beijing.aliyuncs.com/runnergo/manage-ws:releases-v2.0.0
     restart: always
     env_file:
       - ./config.env
@@ -51,7 +51,7 @@ services:
     depends_on:
       - mysql-db
   web-ui:
-    image: registry.cn-beijing.aliyuncs.com/runnergo/web-ui:releases-v1.1.4
+    image: registry.cn-beijing.aliyuncs.com/runnergo/web-ui:releases-v2.0.0
     restart: always
     ports:
       - "9999:81"
@@ -59,7 +59,7 @@ services:
     networks:
       - apipost_net
   engine:
-    image: registry.cn-beijing.aliyuncs.com/runnergo/engine:releases-v1.1.1
+    image: registry.cn-beijing.aliyuncs.com/runnergo/engine:releases-v2.0.0
     restart: always
     env_file:
       - ./config.env
@@ -89,7 +89,7 @@ services:
     networks:
       - apipost_net
   collector:
-    image: registry.cn-beijing.aliyuncs.com/runnergo/collector:releases-v1.0.3
+    image: registry.cn-beijing.aliyuncs.com/runnergo/collector:releases-v2.0.0
     restart: always
     env_file:
       - ./config.env
@@ -97,6 +97,35 @@ services:
       - apipost_net
     depends_on:
       - kafka
+  admin-fe:
+    image: registry.cn-beijing.aliyuncs.com/runnergo/admin-fe:releases-v2.0.0
+    restart: always
+    ports:
+      - "9998:81"
+    networks:
+      - apipost_net
+  permission:
+    image: registry.cn-beijing.aliyuncs.com/runnergo/permission:releases-v2.0.0
+    restart: always
+    env_file:
+      - ./config.env
+    networks:
+      - apipost_net
+    ports:
+      - "58890:30000"
+    depends_on:
+      - mysql-db
+  mock:
+    image: registry.cn-beijing.aliyuncs.com/runnergo/mock:releases-v2.0.0
+    restart: always
+    env_file:
+      - ./config.env
+    networks:
+      - apipost_net
+    ports:
+      - "58900:30000"
+      - "58901:30001"
+      - "58903:30003"
 networks:
   apipost_net:
     driver: bridge

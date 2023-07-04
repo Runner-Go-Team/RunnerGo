@@ -127,6 +127,26 @@ CREATE TABLE `auto_plan_timed_task_conf` (
 
 
 
+# 转储表 company
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `company`;
+
+CREATE TABLE `company` (
+                           `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键id',
+                           `company_id` varchar(100) NOT NULL COMMENT '企业id',
+                           `name` varchar(100) NOT NULL DEFAULT '' COMMENT '企业名称',
+                           `logo` varchar(255) NOT NULL DEFAULT '' COMMENT '企业logo',
+                           `expire_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '服务到期时间',
+                           `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                           `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+                           `deleted_at` datetime DEFAULT NULL,
+                           PRIMARY KEY (`id`),
+                           KEY `idx_company_id` (`company_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='企业表';
+
+
+
 # 转储表 global_variable
 # ------------------------------------------------------------
 
@@ -195,6 +215,82 @@ CREATE TABLE `migrations` (
 
 
 
+# 转储表 mock_target
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `mock_target`;
+
+CREATE TABLE `mock_target` (
+                               `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'id',
+                               `target_id` varchar(100) NOT NULL COMMENT '全局唯一ID',
+                               `team_id` varchar(100) NOT NULL COMMENT '团队id',
+                               `target_type` varchar(10) NOT NULL COMMENT '类型：文件夹，接口，分组，场景,测试用例',
+                               `name` varchar(255) NOT NULL COMMENT '名称',
+                               `parent_id` varchar(100) NOT NULL DEFAULT '0' COMMENT '父级ID',
+                               `method` varchar(16) NOT NULL COMMENT '方法',
+                               `sort` int(11) NOT NULL DEFAULT '0' COMMENT '排序',
+                               `type_sort` int(11) NOT NULL DEFAULT '0' COMMENT '类型排序',
+                               `status` tinyint(4) NOT NULL DEFAULT '1' COMMENT '回收站状态：1-正常，2-回收站',
+                               `version` int(11) NOT NULL DEFAULT '0' COMMENT '产品版本号',
+                               `created_user_id` varchar(100) NOT NULL COMMENT '创建人ID',
+                               `recent_user_id` varchar(100) NOT NULL COMMENT '最近修改人ID',
+                               `description` text NOT NULL COMMENT '备注',
+                               `source` tinyint(4) NOT NULL DEFAULT '0' COMMENT '数据来源：0-mock管理',
+                               `plan_id` varchar(100) NOT NULL COMMENT '计划id',
+                               `source_id` varchar(100) NOT NULL COMMENT '引用来源ID',
+                               `is_checked` tinyint(2) NOT NULL DEFAULT '1' COMMENT '是否开启：1-开启，2-关闭',
+                               `is_disabled` tinyint(2) NOT NULL DEFAULT '0' COMMENT '运行计划时是否禁用：0-不禁用，1-禁用',
+                               `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+                               `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+                               `deleted_at` datetime DEFAULT NULL COMMENT '删除时间',
+                               PRIMARY KEY (`id`),
+                               KEY `idx_target_id` (`target_id`),
+                               KEY `idx_plan_id` (`plan_id`),
+                               KEY `idx_team_id` (`team_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='创建目标';
+
+
+
+# 转储表 mock_target_debug_log
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `mock_target_debug_log`;
+
+CREATE TABLE `mock_target_debug_log` (
+                                         `id` bigint(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键ID',
+                                         `target_id` varchar(100) NOT NULL COMMENT '目标唯一ID',
+                                         `target_type` tinyint(2) NOT NULL COMMENT '目标类型：1-api，2-scene',
+                                         `team_id` varchar(100) NOT NULL COMMENT '团队ID',
+                                         `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+                                         `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+                                         `deleted_at` datetime DEFAULT NULL COMMENT '删除时间',
+                                         PRIMARY KEY (`id`),
+                                         KEY `idx_target_id` (`target_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='mock目标调试日志表';
+
+
+
+# 转储表 permission
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `permission`;
+
+CREATE TABLE `permission` (
+                              `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键id',
+                              `permission_id` bigint(20) NOT NULL DEFAULT '0' COMMENT '权限ID',
+                              `title` varchar(100) NOT NULL DEFAULT '' COMMENT '权限内容',
+                              `mark` varchar(100) NOT NULL DEFAULT '' COMMENT '权限标识',
+                              `url` varchar(100) NOT NULL DEFAULT '' COMMENT '权限url',
+                              `type` tinyint(2) NOT NULL DEFAULT '0' COMMENT '类型（1：权限   2：功能）',
+                              `group_id` int(11) NOT NULL DEFAULT '0' COMMENT '所属权限组（1：企业成员管理  2：团队管理  3：角色管理）',
+                              `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                              `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+                              `deleted_at` datetime DEFAULT NULL,
+                              PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='权限表';
+
+
+
 # 转储表 preinstall_conf
 # ------------------------------------------------------------
 
@@ -212,6 +308,8 @@ CREATE TABLE `preinstall_conf` (
                                    `debug_mode` varchar(100) NOT NULL DEFAULT 'stop' COMMENT 'debug模式：stop-关闭，all-开启全部日志，only_success-开启仅成功日志，only_error-开启仅错误日志',
                                    `mode_conf` text NOT NULL COMMENT '压测配置详情',
                                    `timed_task_conf` text NOT NULL COMMENT '定时任务相关配置',
+                                   `is_open_distributed` tinyint(2) NOT NULL DEFAULT '0' COMMENT '是否开启分布式调度：0-关闭，1-开启',
+                                   `machine_dispatch_mode_conf` text NOT NULL COMMENT '分布式压力机配置',
                                    `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
                                    `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
                                    `deleted_at` timestamp NULL DEFAULT NULL COMMENT '删除时间',
@@ -235,7 +333,7 @@ CREATE TABLE `public_function` (
                                    `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
                                    `deleted_at` datetime DEFAULT NULL COMMENT '删除时间',
                                    PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='公共函数表';
 
 
 
@@ -250,12 +348,70 @@ CREATE TABLE `report_machine` (
                                   `plan_id` varchar(100) NOT NULL DEFAULT '0' COMMENT '计划ID',
                                   `team_id` varchar(100) NOT NULL COMMENT '团队ID',
                                   `ip` varchar(15) NOT NULL COMMENT '机器ip',
+                                  `concurrency` bigint(20) NOT NULL DEFAULT '0' COMMENT '并发数',
                                   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
                                   `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
                                   `deleted_at` datetime DEFAULT NULL COMMENT '删除时间',
                                   PRIMARY KEY (`id`),
                                   KEY `idx_report_id` (`report_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+
+
+# 转储表 role
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `role`;
+
+CREATE TABLE `role` (
+                        `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键id',
+                        `role_id` varchar(100) NOT NULL COMMENT '角色id',
+                        `role_type` tinyint(2) NOT NULL DEFAULT '0' COMMENT '角色分类（1：企业  2：团队）',
+                        `name` varchar(100) NOT NULL DEFAULT '' COMMENT '角色名称',
+                        `company_id` varchar(100) NOT NULL DEFAULT '' COMMENT '企业id',
+                        `level` tinyint(2) NOT NULL DEFAULT '0' COMMENT '角色层级（1:超管/团队管理员 2:管理员/团队成员 3:普通成员/只读成员/自定义角色） ',
+                        `is_default` tinyint(2) NOT NULL DEFAULT '2' COMMENT '是否是默认角色  1：是   2：自定义角色',
+                        `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                        `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+                        `deleted_at` datetime DEFAULT NULL,
+                        PRIMARY KEY (`id`),
+                        KEY `idx_role_id` (`role_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='角色表';
+
+
+
+# 转储表 role_permission
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `role_permission`;
+
+CREATE TABLE `role_permission` (
+                                   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键id',
+                                   `role_id` varchar(100) NOT NULL COMMENT '角色id',
+                                   `permission_id` bigint(20) NOT NULL DEFAULT '0' COMMENT '权限id',
+                                   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                                   `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+                                   `deleted_at` datetime DEFAULT NULL,
+                                   PRIMARY KEY (`id`),
+                                   KEY `idx_role_id` (`role_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='角色权限表';
+
+
+
+# 转储表 role_type_permission
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `role_type_permission`;
+
+CREATE TABLE `role_type_permission` (
+                                        `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键id',
+                                        `role_type` tinyint(2) NOT NULL DEFAULT '0' COMMENT '角色分类（1：企业  2：团队）',
+                                        `permission_id` bigint(20) NOT NULL DEFAULT '0' COMMENT '权限id',
+                                        `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                                        `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+                                        `deleted_at` datetime DEFAULT NULL,
+                                        PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='角色分类可拥有的权限';
 
 
 
@@ -420,6 +576,8 @@ CREATE TABLE `stress_plan_task_conf` (
                                          `control_mode` tinyint(2) NOT NULL DEFAULT '0' COMMENT '控制模式：0-集中模式，1-单独模式',
                                          `debug_mode` varchar(100) NOT NULL DEFAULT 'stop' COMMENT 'debug模式：stop-关闭，all-开启全部日志，only_success-开启仅成功日志，only_error-开启仅错误日志',
                                          `mode_conf` text NOT NULL COMMENT '压测模式配置详情',
+                                         `is_open_distributed` tinyint(2) NOT NULL DEFAULT '0' COMMENT '是否开启分布式调度：0-关闭，1-开启',
+                                         `machine_dispatch_mode_conf` text NOT NULL COMMENT '分布式压力机配置',
                                          `run_user_id` varchar(100) NOT NULL DEFAULT '0' COMMENT '运行人用户ID',
                                          `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
                                          `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
@@ -450,6 +608,8 @@ CREATE TABLE `stress_plan_timed_task_conf` (
                                                `control_mode` tinyint(2) NOT NULL DEFAULT '0' COMMENT '控制模式：0-集中模式，1-单独模式',
                                                `debug_mode` varchar(100) NOT NULL DEFAULT 'stop' COMMENT 'debug模式：stop-关闭，all-开启全部日志，only_success-开启仅成功日志，only_error-开启仅错误日志',
                                                `mode_conf` text NOT NULL COMMENT '压测详细配置',
+                                               `is_open_distributed` tinyint(2) NOT NULL DEFAULT '0' COMMENT '是否开启分布式调度：0-关闭，1-开启',
+                                               `machine_dispatch_mode_conf` text NOT NULL COMMENT '分布式压力机配置',
                                                `run_user_id` varchar(100) NOT NULL DEFAULT '0' COMMENT '运行人ID',
                                                `status` tinyint(11) NOT NULL DEFAULT '0' COMMENT '任务状态：0-未启用，1-运行中，2-已过期',
                                                `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
@@ -482,10 +642,11 @@ CREATE TABLE `target` (
                           `created_user_id` varchar(100) NOT NULL COMMENT '创建人ID',
                           `recent_user_id` varchar(100) NOT NULL COMMENT '最近修改人ID',
                           `description` text NOT NULL COMMENT '备注',
-                          `source` tinyint(4) NOT NULL DEFAULT '0' COMMENT '数据来源：0-接口管理，1-场景管理，2-性能，3-自动化测试',
-                          `plan_id` varchar(100) NOT NULL DEFAULT '0' COMMENT '计划id',
+                          `source` tinyint(4) NOT NULL DEFAULT '0' COMMENT '数据来源：0-测试对象，1-场景管理，2-性能，3-自动化测试',
+                          `plan_id` varchar(100) NOT NULL COMMENT '计划id',
                           `source_id` varchar(100) NOT NULL COMMENT '引用来源ID',
                           `is_checked` tinyint(2) NOT NULL DEFAULT '1' COMMENT '是否开启：1-开启，2-关闭',
+                          `is_disabled` tinyint(2) NOT NULL DEFAULT '0' COMMENT '运行计划时是否禁用：0-不禁用，1-禁用',
                           `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
                           `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
                           `deleted_at` datetime DEFAULT NULL COMMENT '删除时间',
@@ -550,19 +711,44 @@ CREATE TABLE `team` (
 DROP TABLE IF EXISTS `team_env`;
 
 CREATE TABLE `team_env` (
-                            `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'ID',
-                            `team_id` varchar(100) NOT NULL COMMENT '团队ID',
+                            `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键id',
+                            `team_id` varchar(100) NOT NULL COMMENT '团队id',
                             `name` varchar(100) NOT NULL COMMENT '环境名称',
-                            `sort` int(11) NOT NULL DEFAULT '0' COMMENT '排序',
-                            `status` tinyint(2) NOT NULL DEFAULT '1' COMMENT '状态：1-正常 2-删除',
-                            `created_user_id` varchar(100) NOT NULL COMMENT '创建人ID',
-                            `recent_user_id` bigint(20) NOT NULL DEFAULT '0',
-                            `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-                            `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-                            `deleted_at` datetime DEFAULT NULL,
+                            `created_user_id` varchar(100) NOT NULL COMMENT '创建人id',
+                            `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+                            `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
+                            `deleted_at` datetime DEFAULT NULL COMMENT '删除时间',
                             PRIMARY KEY (`id`),
                             KEY `idx_team_id` (`team_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='团队环境管理';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='环境管理表';
+
+
+
+# 转储表 team_env_database
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `team_env_database`;
+
+CREATE TABLE `team_env_database` (
+                                     `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键id',
+                                     `team_id` varchar(100) NOT NULL COMMENT '团队id',
+                                     `team_env_id` bigint(20) NOT NULL COMMENT '环境变量id',
+                                     `type` varchar(100) NOT NULL COMMENT '数据库类型',
+                                     `server_name` varchar(100) NOT NULL COMMENT 'mysql服务名称',
+                                     `host` varchar(200) NOT NULL COMMENT '服务地址',
+                                     `port` int(11) NOT NULL COMMENT '端口号',
+                                     `user` varchar(100) NOT NULL COMMENT '账号',
+                                     `password` varchar(200) NOT NULL COMMENT '密码',
+                                     `db_name` varchar(100) NOT NULL COMMENT '数据库名称',
+                                     `charset` varchar(100) NOT NULL DEFAULT 'utf8mb4' COMMENT '字符编码集',
+                                     `created_user_id` varchar(100) NOT NULL COMMENT '创建人id',
+                                     `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+                                     `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+                                     `deleted_at` datetime DEFAULT NULL COMMENT '删除时间',
+                                     PRIMARY KEY (`id`),
+                                     KEY `idx_team_id` (`team_id`),
+                                     KEY `idx_team_env_id` (`team_env_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='Sql数据库服务基础信息表';
 
 
 
@@ -572,18 +758,16 @@ CREATE TABLE `team_env` (
 DROP TABLE IF EXISTS `team_env_service`;
 
 CREATE TABLE `team_env_service` (
-                                    `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'ID',
-                                    `team_id` varchar(100) NOT NULL COMMENT '团队ID',
-                                    `team_env_id` bigint(20) NOT NULL DEFAULT '0' COMMENT '环境ID',
-                                    `name` varchar(100) NOT NULL DEFAULT '' COMMENT '服务名称',
-                                    `content` varchar(200) NOT NULL DEFAULT '' COMMENT '服务URL',
-                                    `sort` int(11) NOT NULL DEFAULT '0' COMMENT '排序',
-                                    `status` tinyint(2) NOT NULL DEFAULT '1' COMMENT '状态：1-正常 2-删除',
-                                    `created_user_id` varchar(100) NOT NULL DEFAULT '0' COMMENT '创建人ID',
-                                    `recent_user_id` bigint(20) NOT NULL DEFAULT '0',
-                                    `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-                                    `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-                                    `deleted_at` datetime DEFAULT NULL,
+                                    `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键id',
+                                    `team_id` varchar(100) NOT NULL COMMENT '团队id',
+                                    `team_env_id` bigint(20) NOT NULL DEFAULT '0' COMMENT '环境id',
+                                    `protocol_type` varchar(100) NOT NULL COMMENT '协议类型',
+                                    `name` varchar(100) NOT NULL COMMENT '服务名称',
+                                    `content` varchar(200) NOT NULL COMMENT '服务URL',
+                                    `created_user_id` varchar(100) NOT NULL COMMENT '创建人id',
+                                    `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+                                    `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+                                    `deleted_at` datetime DEFAULT NULL COMMENT '删除时间',
                                     PRIMARY KEY (`id`),
                                     KEY `idxx_team_id` (`team_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='团队环境服务管理';
@@ -605,6 +789,101 @@ CREATE TABLE `team_user_queue` (
                                    PRIMARY KEY (`id`),
                                    KEY `idx_team_id` (`team_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='邀请待注册队列';
+
+
+
+# 转储表 third_notice
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `third_notice`;
+
+CREATE TABLE `third_notice` (
+                                `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键id',
+                                `notice_id` varchar(100) NOT NULL COMMENT '通知id',
+                                `name` varchar(100) NOT NULL DEFAULT '' COMMENT '通知名称',
+                                `channel_id` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '三方通知渠道id',
+                                `params` json DEFAULT NULL COMMENT '通知参数',
+                                `status` tinyint(2) NOT NULL DEFAULT '1' COMMENT '1:启用 2:禁用',
+                                `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                                `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+                                `deleted_at` datetime DEFAULT NULL,
+                                PRIMARY KEY (`id`),
+                                KEY `idx_notice_id` (`notice_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='三方通知设置';
+
+
+
+# 转储表 third_notice_channel
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `third_notice_channel`;
+
+CREATE TABLE `third_notice_channel` (
+                                        `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键id',
+                                        `name` varchar(100) NOT NULL DEFAULT '' COMMENT '名称',
+                                        `type` tinyint(2) NOT NULL DEFAULT '0' COMMENT '类型 1:飞书  2:企业微信  3:邮箱  4:钉钉',
+                                        `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                                        `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+                                        `deleted_at` datetime DEFAULT NULL,
+                                        PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='三方通知渠道';
+
+
+
+# 转储表 third_notice_group
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `third_notice_group`;
+
+CREATE TABLE `third_notice_group` (
+                                      `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键id',
+                                      `group_id` varchar(100) NOT NULL COMMENT '通知组id',
+                                      `name` varchar(100) NOT NULL DEFAULT '' COMMENT '通知组名称',
+                                      `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                                      `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+                                      `deleted_at` datetime DEFAULT NULL,
+                                      PRIMARY KEY (`id`),
+                                      KEY `idx_group_id` (`group_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='三方通知组表';
+
+
+
+# 转储表 third_notice_group_event
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `third_notice_group_event`;
+
+CREATE TABLE `third_notice_group_event` (
+                                            `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键id',
+                                            `group_id` varchar(100) NOT NULL DEFAULT '' COMMENT '通知组id',
+                                            `event_id` int(11) NOT NULL DEFAULT '0' COMMENT '事件id',
+                                            `plan_id` varchar(100) NOT NULL DEFAULT '' COMMENT '计划ID',
+                                            `team_id` varchar(100) NOT NULL DEFAULT '' COMMENT '团队ID',
+                                            `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                                            `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+                                            `deleted_at` datetime DEFAULT NULL,
+                                            PRIMARY KEY (`id`),
+                                            KEY `idx_group_id` (`group_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='三方通知组触发事件表';
+
+
+
+# 转储表 third_notice_group_relate
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `third_notice_group_relate`;
+
+CREATE TABLE `third_notice_group_relate` (
+                                             `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键id',
+                                             `group_id` varchar(100) NOT NULL COMMENT '通知组id',
+                                             `notice_id` varchar(100) NOT NULL COMMENT '通知id',
+                                             `params` json DEFAULT NULL COMMENT '通知目标参数',
+                                             `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                                             `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+                                             `deleted_at` datetime DEFAULT NULL,
+                                             PRIMARY KEY (`id`),
+                                             KEY `idx_notice_id` (`notice_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='三方通知组通知关联表';
 
 
 
@@ -654,6 +933,49 @@ CREATE TABLE `user_collect_info` (
 
 
 
+# 转储表 user_company
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `user_company`;
+
+CREATE TABLE `user_company` (
+                                `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键id',
+                                `user_id` varchar(100) NOT NULL COMMENT '用户id',
+                                `company_id` varchar(100) NOT NULL COMMENT '企业id',
+                                `invite_user_id` varchar(100) NOT NULL DEFAULT '0' COMMENT '邀请人id',
+                                `invite_time` datetime DEFAULT NULL COMMENT '邀请时间',
+                                `status` tinyint(2) unsigned NOT NULL DEFAULT '1' COMMENT '状态：1-正常，2-已禁用',
+                                `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                                `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+                                `deleted_at` datetime DEFAULT NULL,
+                                PRIMARY KEY (`id`),
+                                KEY `idx_company_id` (`company_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='用户企业关系表';
+
+
+
+# 转储表 user_role
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `user_role`;
+
+CREATE TABLE `user_role` (
+                             `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键id',
+                             `role_id` varchar(100) NOT NULL COMMENT '角色id',
+                             `user_id` varchar(100) NOT NULL COMMENT '用户id',
+                             `company_id` varchar(100) NOT NULL DEFAULT '' COMMENT '企业id',
+                             `team_id` varchar(100) NOT NULL DEFAULT '' COMMENT '团队id',
+                             `invite_user_id` varchar(100) NOT NULL DEFAULT '0' COMMENT '邀请人id',
+                             `invite_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '邀请时间',
+                             `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                             `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+                             `deleted_at` datetime DEFAULT NULL,
+                             PRIMARY KEY (`id`),
+                             KEY `idx_role_id` (`role_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='用户角色关联表（企业角色、团队角色）';
+
+
+
 # 转储表 user_team
 # ------------------------------------------------------------
 
@@ -664,16 +986,34 @@ CREATE TABLE `user_team` (
                              `user_id` varchar(100) NOT NULL COMMENT '用户ID',
                              `team_id` varchar(100) NOT NULL COMMENT '团队id',
                              `role_id` bigint(20) NOT NULL COMMENT '角色id1:超级管理员，2成员，3管理员',
-                             `team_role_id` varchar(100) NOT NULL DEFAULT '' COMMENT '角色id (角色表对应)',
                              `invite_user_id` varchar(100) NOT NULL DEFAULT '0' COMMENT '邀请人id',
                              `invite_time` datetime DEFAULT NULL COMMENT '邀请时间',
                              `sort` int(11) NOT NULL DEFAULT '0',
+                             `is_show` tinyint(2) NOT NULL DEFAULT '1' COMMENT '是否展示到团队列表  1:展示   2:不展示',
                              `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
                              `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
                              `deleted_at` datetime DEFAULT NULL,
                              PRIMARY KEY (`id`),
                              KEY `idx_team_id` (`team_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='用户团队关系表';
+
+
+
+# 转储表 user_team_collection
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `user_team_collection`;
+
+CREATE TABLE `user_team_collection` (
+                                        `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键id',
+                                        `user_id` varchar(100) NOT NULL COMMENT '用户ID',
+                                        `team_id` varchar(100) NOT NULL COMMENT '团队id',
+                                        `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                                        `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+                                        `deleted_at` datetime DEFAULT NULL,
+                                        PRIMARY KEY (`id`),
+                                        KEY `idx_user_id` (`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='用户收藏团队表';
 
 
 
@@ -722,20 +1062,57 @@ CREATE TABLE `variable_import` (
                                    KEY `idx_scene_id` (`scene_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='导入变量表';
 
-# 初始化公共函数数据
-INSERT INTO `public_function` (`id`, `function`, `function_name`, `remark`, `created_at`, `updated_at`, `deleted_at`)
+
+# 初始化数据
+INSERT INTO `permission` (`permission_id`, `title`, `mark`, `url`, `type`, `group_id`, `created_at`, `updated_at`, `deleted_at`)
 VALUES
-  (NULL, 'md5(string)', 'md5加密', '{{__MD5(ABC)__}}, 加密字符串', '2023-03-28 14:19:24', '2023-03-28 14:27:24', NULL),
-  (NULL, 'SHA256(string)', 'sha256加密', '{{__SHA256(ABC)__}}, 加密字符串', '2023-03-28 14:19:53', '2023-03-28 14:19:53', NULL),
-  (NULL, 'SHA512(string)', 'sha512加密', '{{__SHA512(ABC)__}}, 加密字符串', '2023-03-28 14:21:36', '2023-03-28 14:21:47', NULL),
-  (NULL, 'IdCard(isEighteen, address, birthday, sex)', '身份证号生成', '{{__IdCard(true, 北京市, 2000, 1)__}}, 北京市男2000年出生18位身份证号。\n\n// IdCard 根据参数生成身份证号\n\n// isEighteen 是否生成18位号码\n\n// address 省市县三级地区官方全称: 如\'北京市\'、\'台湾省\'、\'香港特别行政区\'、\'深圳市\'、\'黄浦区\'\n\n// birthday 出生日期: 如 \'2000\'、\'199801\'、\'19990101\'\n\n// sex 性别: 1为男性, 0为女性', '2023-03-28 14:22:24', '2023-03-28 14:22:24', NULL),
-  (NULL, 'RandomIdCard()', '随机生成身份证号', '{{__RandomIdCard()__}}, 随机身份证号', '2023-03-28 14:23:01', '2023-03-28 14:23:01', NULL),
-  (NULL, 'VerifyIdCard(cardId, strict)', '身份证号校验', '{{__VerifyIdCard(231231, true)}}, 结果: false', '2023-03-28 14:23:35', '2023-03-28 14:23:43', NULL),
-  (NULL, '{{__VerifyIdCard(231231, true)}}, 结果: false', '改变字符串大小写', '{{__ToStringLU(abc, L)__}}, 全部小写', '2023-03-28 14:24:04', '2023-03-28 14:24:04', NULL),
-  (NULL, 'RandomInt(start,  end)', '随机数生成(整数)', '{{__RandomInt(start, end)__}}, 随机生成start-end之间的整数', '2023-03-28 14:24:34', '2023-03-28 14:24:34', NULL),
-  (NULL, 'RandomFloat0()', '随机数生成(小数)', '{{__RandomFloat0()__}}, 随机生成0-1之间的小数', '2023-03-28 14:25:11', '2023-03-28 14:25:11', NULL),
-  (NULL, 'RandomString(num int)', '随机数生成(字符串)', '{{__RandomString(5)__}}, 随机生成5位由a-z、0-9、A-Z之间英文字组成的字符串', '2023-03-28 14:25:35', '2023-03-28 14:26:14', NULL),
-  (NULL, 'Uuid()', '生成uuid', '{{__GetUUid()__}}, 随机生成uuid', '2023-03-28 14:25:57', '2023-03-28 14:25:57', NULL),
-  (NULL, 'ToTimeStamp(option)', '时间戳', '{{__ToTimeStamp(s)__}}, 生成秒级时间戳字符串\n\noption: s, ms, ns, ws; 分别是秒; 毫秒; 纳秒; 微秒', '2023-03-28 14:26:35', '2023-03-28 14:26:35', NULL);
+  (101, '创建成员', 'company_save_member', '/permission/api/v1/company/member/save', 1, 1, '2023-05-22 10:31:54', '2023-05-22 14:48:32', NULL),
+  (102, '批量导入成员', 'company_export_member', '/permission/api/v1/company/member/export', 1, 1, '2023-05-22 10:33:42', '2023-05-24 14:17:06', NULL),
+  (103, '编辑成员', 'company_update_member', '/permission/api/v1/company/member/update', 1, 1, '2023-05-22 10:33:42', '2023-05-22 14:48:35', NULL),
+  (104, '删除成员', 'company_remove_member', '/permission/api/v1/company/member/remove', 1, 1, '2023-05-22 10:33:42', '2023-05-22 14:48:37', NULL),
+  (105, '更改企业角色', 'company_set_role_member', '/permission/api/v1/role/company/set', 1, 1, '2023-05-22 10:33:42', '2023-05-22 16:39:34', NULL),
+  (201, '新建团队', 'team_save', '/permission/api/v1/team/save', 1, 2, '2023-05-22 10:35:38', '2023-05-22 14:48:40', NULL),
+  (202, '编辑团队', 'team_update', '/permission/api/v1/team/update', 1, 2, '2023-05-22 10:35:38', '2023-05-22 14:48:41', NULL),
+  (203, '添加团队成员', 'team_save_member', '/permission/api/v1/team/member/save', 1, 2, '2023-05-22 10:35:38', '2023-05-22 14:48:42', NULL),
+  (204, '移除团队成员', 'team_remove_member', '/permission/api/v1/team/member/remove', 1, 2, '2023-05-22 10:35:38', '2023-05-22 14:48:44', NULL),
+  (205, '更改团队角色', 'team_set_role_member', '/permission/api/v1/role/team/set', 1, 2, '2023-05-22 10:35:38', '2023-05-29 14:42:11', NULL),
+  (206, '解散团队', 'team_disband', '/permission/api/v1/team/disband', 1, 2, '2023-05-22 10:35:38', '2023-05-22 14:48:46', NULL),
+  (301, '新建角色', 'role_save', '/permission/api/v1/role/save', 1, 3, '2023-05-22 10:36:40', '2023-05-22 14:48:47', NULL),
+  (302, '设置角色权限', 'role_set', '/permission/api/v1/permission/role/set', 1, 3, '2023-05-22 10:36:40', '2023-05-22 14:48:51', NULL),
+  (303, '删除角色', 'role_remove', '/permission/api/v1/role/remove', 1, 3, '2023-05-22 10:36:40', '2023-05-22 14:48:54', NULL);
 
 
+
+INSERT INTO `role_type_permission` (`role_type`, `permission_id`, `created_at`, `updated_at`, `deleted_at`)
+VALUES
+    (1, 101, '2023-05-22 17:13:31', '2023-05-22 17:14:05', NULL),
+    (1, 102, '2023-05-22 17:16:00', '2023-05-22 17:16:00', NULL),
+    (1, 103, '2023-05-22 17:16:00', '2023-05-22 17:16:00', NULL),
+    (1, 104, '2023-05-22 17:16:00', '2023-05-22 17:16:00', NULL),
+    (1, 105, '2023-05-22 17:16:00', '2023-05-22 17:16:00', NULL),
+    (1, 201, '2023-05-22 17:16:00', '2023-05-22 17:16:00', NULL),
+    (1, 202, '2023-05-22 17:16:00', '2023-05-22 17:16:00', NULL),
+    (1, 203, '2023-05-22 17:16:00', '2023-05-22 17:16:00', NULL),
+    (1, 204, '2023-05-22 17:16:00', '2023-05-22 17:16:00', NULL),
+    (1, 205, '2023-05-22 17:16:00', '2023-05-22 17:16:00', NULL),
+    (1, 301, '2023-05-22 17:16:00', '2023-05-22 17:16:00', NULL),
+    (1, 302, '2023-05-22 17:16:00', '2023-05-22 17:16:00', NULL),
+    (1, 303, '2023-05-22 17:16:00', '2023-05-22 17:16:00', NULL),
+    (2, 202, '2023-05-22 17:16:00', '2023-05-22 17:16:00', NULL),
+    (2, 203, '2023-05-22 17:16:01', '2023-05-22 17:16:01', NULL),
+    (2, 205, '2023-05-22 17:16:01', '2023-05-22 17:16:01', NULL),
+    (2, 206, '2023-05-22 17:16:01', '2023-05-22 17:16:01', NULL),
+    (2, 204, '2023-05-24 15:22:43', '2023-05-24 15:22:43', NULL),
+    (1, 206, '2023-05-25 18:57:51', '2023-05-25 18:57:51', NULL);
+
+
+
+INSERT INTO `third_notice_channel` (`name`, `type`, `created_at`, `updated_at`, `deleted_at`)
+VALUES
+    ('飞书群机器人', 1, '2023-06-21 10:46:03', '2023-06-21 10:46:03', NULL),
+    ('飞书企业应用', 1, '2023-06-21 10:46:25', '2023-06-21 10:46:25', NULL),
+    ('企业微信应用', 2, '2023-06-21 10:46:39', '2023-06-21 10:46:53', NULL),
+    ('企业微信机器人', 2, '2023-06-21 10:47:08', '2023-06-21 10:47:08', NULL),
+    ('邮箱', 3, '2023-06-29 11:03:45', '2023-06-29 11:03:45', NULL),
+    ('钉钉群机器人', 4, '2023-06-29 11:03:55', '2023-06-29 11:04:00', NULL),
+    ('钉钉企业应用', 4, '2023-06-29 11:04:13', '2023-06-29 11:04:13', NULL);
