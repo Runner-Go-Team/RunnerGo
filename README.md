@@ -1,37 +1,37 @@
 ![logo](https://apipost.oss-cn-beijing.aliyuncs.com/kunpeng/images/log.png)
 
+
 <p align="center">
-  <a href="https://github.com/Runner-Go-Team/RunnerGo/releases">
+  <a href="https://gitee.com/Runner-Go-Team/RunnerGo/releases/tag/v1.1.3">
     <img src="https://img.shields.io/badge/releases-v1.1.3-brightgreen.svg" alt="vue">
-   <a href="https://github.com/Runner-Go-Team/RunnerGo/releases">
+   <a href="https://gitee.com/Runner-Go-Team/RunnerGo/blob/main/LICENSE">
     <img src="https://img.shields.io/badge/license-Apache License 2.0-brightgreen.svg" alt="vue">
- <a href="https://github.com/Runner-Go-Team/RunnerGo/releases/tag/v1.0.3">
+ <a href="https://gitee.com/Runner-Go-Team/RunnerGo/releases/tag/v1.0.4">
     <img src="https://img.shields.io/badge/download-18.3KB-brightgreen.svg" alt="vue">
    <a href="https://wiki.runnergo.cn/docs/">
     <img src="https://img.shields.io/badge/document-RunnerGo-brightgreen.svg" alt="vue">
 
 
-## 源码清单
+## 源码清单：
 
 ### RunnerGo-management-websocket-open
-https://github.com/Runner-Go-Team/RunnerGo-management-websocket-open
 
-### RunnerGo-management-open
-https://github.com/Runner-Go-Team/RunnerGo-management-open
+https://gitee.com/Runner-Go-Team/Runner-go-management-websocket-open
 
-### RunnerGo-collector-open 
-https://github.com/Runner-Go-Team/RunnerGo-collector-open
+### runnergo-management-open
+https://gitee.com/Runner-Go-Team/runnergo-management-open
 
-### RunnerGo-fe-open
-https://github.com/Runner-Go-Team/RunnerGo-management-open
+### runnergo-collector-open
+https://gitee.com/Runner-Go-Team/runnergo-collector-open
 
-### RunnerGo-engine-open
-https://github.com/Runner-Go-Team/RunnerGo-engine-open
+### runnergo-engine-open
+https://gitee.com/Runner-Go-Team/runnergo-engine-open
 
-### file-server 
-https://github.com/Runner-Go-Team/file-server
+### file-server
+https://gitee.com/Runner-Go-Team/file-server
 
-
+### runnergo-fe-open
+https://gitee.com/Runner-Go-Team/runnergo-fe-open
 
 
 
@@ -48,19 +48,29 @@ RunnerGo致力于打造成一款全栈式测试平台，采用了较为宽松的
 - 实时日志： 可在压测过程中开启日志模式，查看请求响应信息
 - 可编辑报告：可在任务运行结束后，针对测试结果进行测试分析，实时编写报告
 - Flow场景流：可视化的业务流，通过连线就可快速搭建起来自己的业务流，还可直接调试运行场景，电流般的业务流转
-- 多种压测模式：支持并发模式、阶梯模式、错误率模式、响应时间模式、每秒应答数模式等多种压测模式，满足所有业务需求
+- 多种压测模式：支持并发模式、阶梯模式、错误率模式、响应时间模式、每秒应答数模式、轮次模式等多种压测模式，支持根据机器自定义分布配置，满足所有业务需求
 - 自持接口自动化，采用用例集概念，生成丰富的自动化报告
+- Mock服务：支持自定义请求校验与响应期望
+- 企业管理后台：支持多团队管理，通过权限设置来管理员工，保护公司数据安全和流量资源
 
 ### 首页展示
 ![interface](https://apipost.oss-cn-beijing.aliyuncs.com/kunpeng/images/home.jpg)
 
-### 性能测试报告报告
+### 性能测试报告
 ![report](https://apipost.oss-cn-beijing.aliyuncs.com/kunpeng/images/stress_report.jpg)
 
 ### 性能测试报告对比
-![报告对比.jpg](https://img.cdn.apipost.cn/client/user/911577/avatar/b566c37d1d68d796bdb0d07229dc5ea5640a96a6efd07.jpg)
+![报告对比.jpg](https://apipost.oss-cn-beijing.aliyuncs.com/kunpeng/images/contrast.jpg)
 
 ### 自动化测试报告
+![report](https://apipost.oss-cn-beijing.aliyuncs.com/kunpeng/images/auto_report.jpg)
+
+### Mock服务
+
+![report](https://apipost.oss-cn-beijing.aliyuncs.com/kunpeng/images/mock.png)
+
+### 企业管理后台
+
 ![report](https://apipost.oss-cn-beijing.aliyuncs.com/kunpeng/images/auto_report.jpg)
 
 ### 官网地址
@@ -68,7 +78,7 @@ RunnerGo致力于打造成一款全栈式测试平台，采用了较为宽松的
 
 ## 快速开始
 
-开源版安装教程请见： https://wiki.runnergo.cn/docs/42 
+开源版安装教程请见： https://wiki.runnergo.cn/docs/42
 里面有非常详细的图文教程，如需远程指导，也可划到当前页面最下方添加我们的微信，我们会为您提供安装帮助。
 
 
