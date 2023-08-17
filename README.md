@@ -14,7 +14,7 @@
 
 ## 源码清单：
 
-### RunnerGo-management-websocket-open
+### runnerGo-management-websocket-open
 
 https://gitee.com/Runner-Go-Team/Runner-go-management-websocket-open
 
@@ -32,6 +32,12 @@ https://gitee.com/Runner-Go-Team/file-server
 
 ### runnergo-fe-open
 https://gitee.com/Runner-Go-Team/runnergo-fe-open
+
+### runnergo-fe-admin-open
+https://github.com/Runner-Go-Team/runnergo-fe-admin-open
+
+### runnergo-permission-open
+https://github.com/Runner-Go-Team/RunnerGo-permission-open
 
 
 
