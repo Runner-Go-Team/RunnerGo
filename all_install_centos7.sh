@@ -3,19 +3,19 @@
 # 初始v1.0版本
 # 输入 systemctl stop firewalld.service 命令，关闭防火墙，使用 systemctl disable firewalld.service 指令可以永久关闭防火墙
 # 输入 systemctl start firewalld 开启防火墙
-# 可以手动创建/root/runnergo_sh目录，复制all_install.sh脚本到/root/runnergo_sh目录执行source all_install.sh指令
+# 可以手动创建/root/runnergo_sh目录，复制all_install_centos7.sh脚本到/root/runnergo_sh目录执行source all_install_centos7.sh指令
 # 判断如果当前路径不存在就创建
 if [ ! -d "/root/runnergo_sh/" ];then
     mkdir -p /root/runnergo_sh
 	# 获取当前目录路径的变量
 	CRTDIR=$(pwd)
-	mv $CRTDIR/all_install.sh /root/runnergo_sh
-	echo "请执行source all_install.sh指令，自动化一键部署启动runnerGO平台"
+	mv $CRTDIR/all_install_centos7.sh /root/runnergo_sh
+	echo "请执行source all_install_centos7.sh指令，自动化一键部署启动runnerGO平台"
 else
 	# 获取当前目录路径的变量
 	CRTDIR=$(pwd)
-	mv $CRTDIR/all_install.sh /root/runnergo_sh
-    echo "/root/runnergo_sh目录文件夹已经存在，请执行source all_install.sh指令，自动化一键部署启动runnerGO平台"
+	mv $CRTDIR/all_install_centos7.sh /root/runnergo_sh
+    echo "/root/runnergo_sh目录文件夹已经存在，请执行source all_install_centos7.sh指令，自动化一键部署启动runnerGO平台"
 fi
 # Centos7设置国内yum源
 cd /etc/yum.repos.d/
@@ -214,7 +214,7 @@ ExecStop=/opt/cloud/middleware/kafka/bin/kafka-server-stop.sh
 Restart=on-failure
 PrivateTmp=true
 [Install]
-WantedBy=multi-user.target" > /lib/systemd/system/kafka.service
+WantedBy=multi-user.target" > /usr/lib/systemd/system/kafka.service
 chmod 754 /usr/lib/systemd/system/kafka.service
 ##然后重启加在服务配置文件
 systemctl daemon-reload
