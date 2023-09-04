@@ -40,7 +40,7 @@ services:
     depends_on:
       - mysql-db
   manage-ws:
-    image: registry.cn-beijing.aliyuncs.com/runnergo/manage-ws:releases-v2.0.0
+    image: registry.cn-beijing.aliyuncs.com/runnergo/manage-ws:releases-v2.0.1
     restart: always
     env_file:
       - ./config.env
