@@ -77,7 +77,7 @@ RunnerGo致力于打造成一款全栈式测试平台，采用了较为宽松的
 
 ### 企业管理后台
 
-![report](https://apipost.oss-cn-beijing.aliyuncs.com/kunpeng/images/auto_report.jpg)
+![report](https://apipost.oss-cn-beijing.aliyuncs.com/kunpeng/images/2.3.0-9.png)
 
 ### 官网地址
 [http://www.runnergo.com/](http://www.runnergo.com/)
