@@ -10,6 +10,8 @@ services:
     restart: always
     networks:
       - apipost_net
+    ports:
+      - "3307:3306"
   redis-db:
     image: registry.cn-beijing.aliyuncs.com/runnergo/redis:6.2.7
     volumes:
@@ -18,6 +20,8 @@ services:
     restart: always
     networks:
       - apipost_net
+    ports:
+      - "6380:6379"
   mongo-db:
     image: registry.cn-beijing.aliyuncs.com/runnergo/mongo:4.4
     env_file:
@@ -28,11 +32,15 @@ services:
     restart: always
     networks:
       - apipost_net
+    ports:
+      - "27018:27017"
   manage:
-    image: registry.cn-beijing.aliyuncs.com/runnergo/manage:releases-v2.0.1
+    image: registry.cn-beijing.aliyuncs.com/runnergo/manage:releases-v3.0.0
     restart: always
     env_file:
       - ./config.env
+    volumes:
+      - ./static:/data/static
     networks:
       - apipost_net
     ports:
@@ -40,7 +48,7 @@ services:
     depends_on:
       - mysql-db
   manage-ws:
-    image: registry.cn-beijing.aliyuncs.com/runnergo/manage-ws:releases-v2.0.1
+    image: registry.cn-beijing.aliyuncs.com/runnergo/manage-ws:releases-v3.0.0
     restart: always
     env_file:
       - ./config.env
@@ -51,7 +59,7 @@ services:
     depends_on:
       - mysql-db
   web-ui:
-    image: registry.cn-beijing.aliyuncs.com/runnergo/web-ui:releases-v2.0.1
+    image: registry.cn-beijing.aliyuncs.com/runnergo/web-ui:releases-v3.0.0
     restart: always
     ports:
       - "9999:81"
@@ -65,6 +73,15 @@ services:
       - ./config.env
     networks:
       - apipost_net
+  engine-ui:
+    image: registry.cn-beijing.aliyuncs.com/runnergo/engine-ui-ee:releases-v1.0.0-beta
+    restart: always
+    env_file:
+      - ./config.env
+    networks:
+      - apipost_net
+    depends_on:
+      - redis-db
   file-server:
     image: registry.cn-beijing.aliyuncs.com/runnergo/file-server:releases-v1.0.1
     restart: always
@@ -75,28 +92,28 @@ services:
     networks:
       - apipost_net
   zookeeper:
-      image: registry.cn-beijing.aliyuncs.com/runnergo/zookeeper:latest 
-      restart: always
-      networks:
-        - apipost_net
+    image: registry.cn-beijing.aliyuncs.com/runnergo/zookeeper:latest
+    restart: always
+    networks:
+      - apipost_net
   kafka:
-    image: registry.cn-beijing.aliyuncs.com/runnergo/kafka:2.13-3.2.1 
+    image: registry.cn-beijing.aliyuncs.com/runnergo/kafka:2.13-3.2.1
     restart: always
     depends_on:
-        - zookeeper
+      - zookeeper
     env_file:
-        - ./config.env
+      - ./config.env
     networks:
       - apipost_net
   collector:
-      image: registry.cn-beijing.aliyuncs.com/runnergo/collector:releases-v2.0.1
-      restart: always
-      env_file:
-        - ./config.env
-      networks:
-        - apipost_net
-      depends_on:
-        - kafka
+    image: registry.cn-beijing.aliyuncs.com/runnergo/collector:releases-v2.0.1
+    restart: always
+    env_file:
+      - ./config.env
+    networks:
+      - apipost_net
+    depends_on:
+      - kafka
   admin-fe:
     image: registry.cn-beijing.aliyuncs.com/runnergo/admin-fe:releases-v2.0.0
     restart: always
