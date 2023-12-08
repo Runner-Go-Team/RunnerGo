@@ -35,7 +35,7 @@ services:
     ports:
       - "27018:27017"
   manage:
-    image: registry.cn-beijing.aliyuncs.com/runnergo/manage:releases-v3.0.0
+    image: registry.cn-beijing.aliyuncs.com/runnergo/manage:releases-v3.0.1
     restart: always
     env_file:
       - ./config.env
@@ -59,7 +59,7 @@ services:
     depends_on:
       - mysql-db
   web-ui:
-    image: registry.cn-beijing.aliyuncs.com/runnergo/web-ui:releases-v3.0.0
+    image: registry.cn-beijing.aliyuncs.com/runnergo/web-ui:releases-v3.0.1
     restart: always
     ports:
       - "9999:81"
