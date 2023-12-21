@@ -67,7 +67,7 @@ services:
     networks:
       - apipost_net
   engine:
-    image: registry.cn-beijing.aliyuncs.com/runnergo/engine:releases-v2.0.2
+    image: registry.cn-beijing.aliyuncs.com/runnergo/engine:releases-v2.0.3
     restart: always
     env_file:
       - ./config.env
